@@ -1,41 +1,19 @@
-# Website
+# 🚀 Waizer Help Center
 
-This website is built using [Docusaurus](https://docusaurus.io/), a modern static website generator.
+O **Waizer Help Center** é a central de conhecimento  Waizer. Este projeto foi desenvolvido utilizando **Docusaurus** para oferecer uma experiência de leitura rápida, intuitiva e otimizada.
 
-## Installation
 
-```bash
-yarn
-```
+## 🛠️ Tecnologias Utilizadas
+*   [Docusaurus v3](https://docusaurus.io/)
+*   React & CSS Grid para interface customizada
+*   Algolia DocSearch para busca inteligente
 
-## Local Development
+## 🚀 Como rodar localmente
+1. Clone o repositório
+2. Instale as dependências:
+   `npm install`
+3. Inicie o servidor de desenvolvimento:
+   `npm start`
 
-```bash
-yarn start
-```
-
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
-
-## Build
-
-```bash
-yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-## Deployment
-
-Using SSH:
-
-```bash
-USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```bash
-GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
+## 📄 Licença
+Este projeto é de uso exclusivo da White Wall / Waizer.
