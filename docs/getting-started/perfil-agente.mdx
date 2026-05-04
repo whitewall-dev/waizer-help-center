@@ -1,0 +1,60 @@
+---
+sidebar_position: 3
+title: Perfil do Agente
+description: Configure o contexto de negócio e os KPIs que guiam a IA.
+---
+
+import Image from '@theme/IdealImage';
+
+# Perfil do Agente
+
+A tela de Perfil do Agente é o centro de configuração de contexto do Waizer. É aqui que você define a identidade da sua empresa, as métricas de sucesso e as ferramentas que o agente de IA deve considerar para analisar interações e gerar insights precisos.
+
+Você pode acessá-la através do menu lateral, na opção **Perfil do Agente**.
+
+## 1. Informações da Empresa
+
+Este campo define "quem é a empresa" para a inteligência artificial. Essas informações alimentam diretamente o prompt do agente, personalizando a forma como ele interpreta cada diálogo.
+
+*   **Nome da Empresa:** Identificação oficial do negócio.
+*   **Segmento:** O setor de atuação, que ajuda a IA a entender o vocabulário e as expectativas do mercado.
+*   **Resumo do Negócio:** Um contexto sobre o que a empresa faz e quais são seus objetivos principais.
+
+:::info[Impacto na IA]
+Ao clicar em **Salvar**, os dados são persistidos e passam a alimentar não apenas as respostas do agente, mas também a geração dos seus relatórios de performance, garantindo que a análise seja sempre contextualizada ao seu nicho.
+:::
+
+<Image 
+  img={require('./img/perfil-agente/perfil-agente.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+
+
+## 2. Definindo seus KPIs de Sucesso
+
+Os KPIs (Indicadores-chave de Desempenho) orientam as métricas de performance do dashboard. O Waizer permite configurar até **5 KPIs simultâneos** para manter o foco analítico da IA.
+
+### Como gerenciar seus KPIs:
+
+*   **Adicionar:** Clique no botão de adição, insira um nome claro e uma descrição detalhada de como aquele indicador deve ser medido pela IA.
+*   **Editar:** Clique sobre o ícone de editar em um KPI existente para ajustar seu nome ou a regra de negócio.
+*   **Remover:** Utilize o ícone de X em um KPI para excluir indicadores que não fazem mais parte da sua estratégia atual.
+
+
+## 3. Integrações
+
+Em etapas mais avançadas, você poderá conectar o Waizer ao seu CRM (HubSpot), ferramentas de Ads e até criar conectores customizados via **MCP** para expandir o conhecimento da IA.
+
+:::tip[Próximo Nível]
+Para saber como conectar sistemas externos e usar o Model Context Protocol (MCP), consulte nossa **[Central de Integrações Avançadas](../integracoes/index.md)**.
+:::
+
+
+Agora que você já configurou o "cérebro" da operação, que tal investigar detalhes específicos? Aprenda a usar o **Ask Waizer** para fazer perguntas em linguagem natural diretamente para a sua base de dados.

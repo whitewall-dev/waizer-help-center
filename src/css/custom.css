@@ -1,0 +1,158 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* You can override the default Infima variables here. */
+:root {
+  --ifm-color-primary: #2e8555;
+  --ifm-color-primary-dark: #29784c;
+  --ifm-color-primary-darker: #277148;
+  --ifm-color-primary-darkest: #205d3b;
+  --ifm-color-primary-light: #33925d;
+  --ifm-color-primary-lighter: #359962;
+  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: #21af90;
+  --ifm-color-primary-darker: #1fa588;
+  --ifm-color-primary-darkest: #1a8870;
+  --ifm-color-primary-light: #29d5b0;
+  --ifm-color-primary-lighter: #32d8b4;
+  --ifm-color-primary-lightest: #4fddbf;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+/* Centralização e largura do container */
+.search-bar-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 0 20px;
+  width: 100%;
+}
+
+/* Transformando o botão em uma barra de pesquisa larga */
+.search-bar-wrapper .DocSearch-Button {
+  width: 100%;
+  max-width: 600px; /* Largura máxima desejada */
+  height: 3rem;
+  border-radius: 8px;
+  margin: 0;
+  padding: 0 1.5rem;
+  background-color: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  justify-content: flex-start; /* Alinha o texto à esquerda */
+}
+
+/* Ajuste do ícone de lupa e texto */
+.search-bar-wrapper .DocSearch-Button-Placeholder {
+  font-size: 1.1rem;
+  padding: 0 12px;
+  color: var(--ifm-color-emphasis-600);
+}
+
+/* Estilo ao passar o mouse */
+.search-bar-wrapper .DocSearch-Button:hover {
+  background-color: var(--ifm-color-emphasis-200);
+  border-color: var(--ifm-color-primary);
+  box-shadow: none;
+}
+
+/* (Opcional) Esconder o atalho de teclado "Ctrl+K" para um visual mais limpo na Home */
+.search-bar-wrapper .DocSearch-Button-Keys {
+  display: none;
+}
+
+:root {
+  --waizer-primary: #00d1ff; /* Azul característico */
+  --waizer-secondary: #7000ff; /* Roxo característico */
+  --waizer-bg: #0a0b10;
+  --waizer-card-bg: #161821;
+}
+
+/* Fundo da página e Hero */
+.hero-help-center {
+  background: radial-gradient(circle at top, #1a1c2e 0%, var(--waizer-bg) 100%);
+  padding: 8rem 2rem;
+  text-align: center;
+  color: white;
+}
+
+.hero-help-center h1 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(to right, #fff, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 2rem;
+}
+
+/* Barra de Pesquisa Algolia Customizada */
+.search-bar-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 4rem;
+}
+
+.search-bar-wrapper .DocSearch-Button {
+  width: 100%;
+  max-width: 700px;
+  height: 4rem;
+  border-radius: 12px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0 2rem;
+}
+
+.search-bar-wrapper .DocSearch-Button:hover {
+  border-color: var(--waizer-primary);
+  background-color: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 20px rgba(0, 209, 255, 0.2);
+}
+
+.search-bar-wrapper .DocSearch-Button-Placeholder {
+  color: #888;
+  font-size: 1.2rem;
+}
+
+/* Grid de Categorias */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 4rem 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.category-card {
+  background: var(--waizer-card-bg);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px;
+  padding: 2.5rem;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+  text-decoration: none !important;
+  color: white !important;
+}
+
+.category-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--waizer-primary);
+}
+
+.category-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: var(--waizer-primary);
+}
+
+.category-card p {
+  color: #a1a1aa;
+  line-height: 1.6;
+}

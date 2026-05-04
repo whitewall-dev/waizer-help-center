@@ -1,0 +1,274 @@
+---
+sidebar_position: 2
+title: Entendendo os Dashboards
+description: Aprenda a interpretar os indicadores, gráficos e painéis do Waizer.
+---
+
+import Image from '@theme/IdealImage';
+
+# Entendendo os Dashboards
+
+O Dashboard do Waizer centraliza a saúde da sua operação em uma única tela. Ele transforma milhões de interações em indicadores visuais para que você saiba exatamente onde o seu chatbot ou atendimento humano precisa de atenção.
+
+
+## 1. Indicadores Principais
+
+No topo da tela, você encontra os números fundamentais da sua operação no período selecionado:
+
+*   **Total de conversas:** Volume bruto de conversas processados.
+*   **Taxa de erro:** Percentual de conversas que apresentaram falhas ou cenário fora do esperado.
+*   **Índice de resolução:** Percentual de conversas que foram resolvidas conforme a necessidade do usuário.
+*   **Taxa de transbordo:** Percentual de conversas que necessitaram de intervenção humana para resolução.
+
+<Image 
+  img={require('./img/entendendo_dashboards/kpis.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+## 2. Score de Performance
+
+É a métrica de "saúde" que avalia operação, experiência, qualidade e impacto para gerar uma nota de 0 a 100.
+*   **Excelente (80-100):** Operação otimizada em todos os indicadores principais.
+*   **Bom (60-79):** Desempenho satisfatório. Espaço para melhorias pontuais.
+*   **Precisa melhorar (0-59):** Operação apresenta falhas críticas que impactam negativamente a experiência e o resultado final.
+
+<Image 
+  img={require('./img/entendendo_dashboards/score.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+
+## 3. Sentimento das Conversas
+
+Este módulo traduz a experiência emocional do cliente em dados acionáveis, permitindo identificar se a jornada está gerando satisfação ou frustração.
+
+### O Gráfico de Dispersão
+O gráfico de **Bolhas de Sentimento** correlaciona o humor do usuário em dois momentos distintos:
+* **Eixo X (Sentimento Inicial):** O humor detectado nas primeiras frases do cliente ao iniciar o contato.
+* **Eixo Y (Sentimento Final):** O humor detectado no encerramento da conversa.
+* **Tamanho das Bolhas:** Indica o volume de conversas que compartilham aquele mesmo perfil emocional.
+
+<Image 
+  img={require('./img/entendendo_dashboards/sentimentos_1.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+
+### Matriz de Quadrantes (Leitura Estratégica)
+Acesse esta visualização ao passar o mouse sobre o ícone **(i)** no canto superior direito do gráfico.
+
+O quadrante de sentimentos é uma metodologia exclusiva desenvolvida pela White Wall, que organiza e interpreta as interações dos clientes de forma visual e assertiva.
+* **Q1 (Superior Direito):** Conversas que mantiveram o cliente satisfeito do início ao fim.
+* **Q2 (Superior Esquerdo):** Clientes que iniciaram com sentimentos negativos e tiveram o humor revertido para positivo após a interação.
+* **Q3 (Inferior Esquerdo):** Usuários que iniciaram e terminaram de forma negativa, sinalizando falhas críticas de resolução.
+* **Q4 (Inferior Direito):** Clientes que iniciaram bem, mas tiveram uma experiência ruim durante o fluxo.
+
+<Image 
+  img={require('./img/entendendo_dashboards/sentimentos_2.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto',
+    marginBottom: '12px', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+:::tip[Dica Waizer!]
+Use o gráfico para identificar padrões. Se houver concentração em **Q3** e **Q4**, revise seu fluxo de chatbot ou o roteiro de atendimento humano imediatamente.
+:::
+
+
+### Modos de Visualização
+Você pode alternar a perspectiva da análise através dos botões no topo do gráfico:
+
+1. **Bolhas de Sentimento:** Foca na dispersão e volume individual das conversas. É ideal para identificar casos específicos e entender a variabilidade do atendimento.
+2. **Mapa de Calor (Heatmap):** Agrupa os dados em manchas térmicas de concentração. Esta visão é recomendada para identificar tendências comportamentais em operações de altíssimo volume, onde a sobreposição de bolhas pode dificultar a leitura.
+
+<Image 
+  img={require('./img/entendendo_dashboards/sentimentos_3.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto',
+    marginBottom: '12px', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+
+
+## 4. Problemas e Falhas
+
+Esta seção apresenta os principais erros identificados nas interações com o bot, organizados por tipo de falha, nível de severidade e quantidade de ocorrências.
+
+*   **Severidade:** Cada falha é classificada como **Alta, Média ou Baixa**, indicando o impacto direto no atendimento.
+*   **Ocorrências:** Número total de vezes que o problema foi registrado no período.
+
+:::warning[Atenção!]
+Uma mesma conversa pode ter mais de um tipo de problema e/ou falha.
+:::
+
+<Image 
+  img={require('./img/entendendo_dashboards/problemas_falhas.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto',
+    marginBottom: '12px', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+### Detalhando um Problema
+Ao clicar em algum dos erros, será apresentado:
+
+* **Descrição do problema:** Um resumo explicativo sobre a natureza da falha e como ela afeta a jornada do usuário.
+* **Problemas:** Uma lista específica dos erros identificados dentro dessa categoria, acompanhada do respectivo volume de ocorrências.
+* **Contatos impactados:** Acesso direto à lista de conversas que originaram os alertas, permitindo a auditoria do diálogo real para compreensão do contexto.
+
+<Image 
+  img={require('./img/entendendo_dashboards/problemas_falhas_2.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto',
+    marginBottom: '12px', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+:::tip[Dica Waizer!]
+Utilize a lista de Contatos impactados para analisar o contexto real das interações e validar os pontos de atrito identificados pela plataforma.
+:::
+
+
+## 5. Tópicos
+
+Este painel organiza os assuntos recorrentes nas interações, permitindo visualizar o que realmente consome o esforço da sua operação.
+
+A interpretação do percentual exibido ao lado de cada tópico **muda dinamicamente** de acordo com o filtro selecionado em **"Ordenar por"**:
+
+*   **Mais discutidos:** Indica o quanto aquele tema representa no volume total da lista.
+*   **Taxa de erro:** Mostra a proporção de erros dentro daquele assunto específico.
+*   **Índice de resolução:** Indica o sucesso de encerramento para aquele tema.
+*   **Taxa de transbordo:** Mostra quanto daquele assunto acaba no atendimento humano.
+
+<Image 
+  img={require('./img/entendendo_dashboards/topicos.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto',
+    marginBottom: '12px', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+## 6. Insights e Sugestões
+
+Esta seção apresenta recomendações práticas que explicam o "porquê" por trás dos números, transformando o conteúdo das conversas em diagnósticos qualitativos.
+
+*   **Nível de Impacto:** As recomendações são classificadas como **Alto, Médio ou Baixo impacto**, orientando a priorização de ajustes que trarão maior retorno na experiência do cliente.
+*   **Problema Identificado:** Uma descrição clara do comportamento ou gargalo detectado durante as interações.
+
+<Image 
+  img={require('./img/entendendo_dashboards/insights_1.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto',
+    marginBottom: '12px', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+### Detalhamento da Sugestão
+
+Ao selecionar um insight, o Waizer abre uma visão aprofundada com o plano de ação e as métricas de impacto relacionadas:
+
+*   **Solução Recomendada:** Um guia prático com os ajustes sugeridos para o fluxo ou processo de atendimento.
+*   **Resultados Esperados:** Os benefícios diretos previstos ao aplicar a solução (ex: maior clareza para o usuário ou redução de contatos desnecessários).
+*   **Métricas de Contexto:** Dados de suporte que justificam a sugestão, como a **Recorrência** do tema, o nível de **Frustração média** dos usuários e a **Taxa de insucesso** das conversas relacionadas.
+
+<Image 
+  img={require('./img/entendendo_dashboards/insights_2.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto',
+    marginBottom: '12px', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+:::tip[Dica Waizer!]
+Na tela de detalhes, você também pode clicar em **Ver conversas** para acessar os contatos que originaram o insight e entender o contexto completo da dor do cliente.
+:::
+
+
+## 7. Nuvem de Palavras
+
+A Nuvem de Palavras oferece uma leitura rápida do vocabulário mais utilizado pelos seus clientes. Ela permite identificar tendências de comportamento e termos críticos sem a necessidade de ler milhares de mensagens individualmente.
+
+*   **Volume e Sentimento:** O tamanho de cada palavra reflete sua frequência nas conversas, enquanto a cor indica a carga emocional (Verde para positivo, Rosa/Vermelho para negativo).
+*   **Filtro por Sentimento:** É possível filtrar toda a nuvem clicando nos botões de **Distribuição de sentimentos** (Positivos, Neutros ou Negativos). Isso permite isolar apenas os termos que geram satisfação ou atrito.
+
+<Image 
+  img={require('./img/entendendo_dashboards/nuvem_palavras_1.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto',
+    marginBottom: '12px', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+### Contexto da Palavra
+
+Ao clicar em um termo específico da nuvem, o Waizer abre uma visão detalhada para que você entenda exatamente como aquela palavra está sendo aplicada:
+
+*   **Diagrama de Contexto:** Exibe um fluxo que mostra quais termos são falados imediatamente antes e depois da palavra selecionada, revelando o contexto semântico da expressão.
+*   **Informações Complementares:** O painel traz o número exato de **ocorrências**, a distribuição de **sentimentos** específica para aquele termo e exemplos reais de uso.
+*   **Rastreabilidade:** Através do botão de acesso às conversas, você pode abrir os diálogos completos onde a palavra foi citada para uma auditoria detalhada.
+
+<Image 
+  img={require('./img/entendendo_dashboards/nuvem_palavras_2.png')} 
+  style={{ 
+    display: 'block', 
+    marginLeft: 'auto', 
+    marginRight: 'auto',
+    marginBottom: '12px', 
+    width: '700px', 
+    borderRadius: '12px' 
+  }} 
+/>
+
+
+Agora que você entende como ler os dados e identificar padrões no seu painel, o próximo passo é configurar o contexto da sua empresa para que a IA analise suas conversas com ainda mais precisão.
