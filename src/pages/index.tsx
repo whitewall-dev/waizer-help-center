@@ -1,6 +1,7 @@
 import React from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
+import useBaseUrl from '@docusaurus/useBaseUrl';
 import { DocSearch } from '@docsearch/react';
 import '@docsearch/css';
 
@@ -28,10 +29,19 @@ const categories = [
 ];
 
 export default function Home() {
+  const logoUrl = useBaseUrl('img/waizer_branco.png');
   return (
     <Layout title="Help Center" description="Documentação oficial Waizer">
-      <header className="hero-help-center">
+      <header className="hero-help-center" style={{ textAlign: 'center', padding: '40px 0' }}>
+        {/* Renderiza o Logo */}
+        <img 
+          src={logoUrl} 
+          alt="Waizer Logo" 
+          style={{ width: '200px', marginBottom: '20px' }} 
+        />
+        
         <h1>Como podemos ajudar?</h1>
+        
         <div className="search-bar-wrapper">
           <DocSearch
             appId="YOUR_APP_ID"
