@@ -13,17 +13,17 @@ const categories = [
   {
     title: '👤 Perfil do Agente',
     description: 'Defina a identidade da sua empresa e os KPIs que guiam a inteligência da nossa IA.',
-    link: '/docs/perfil-agente',
+    link: '/docs/getting-started/perfil-agente',
   },
   {
     title: '📊 Dashboards',
     description: 'Entenda como interpretar métricas de performance, sentimentos e tópicos discutidos.',
-    link: '/docs/entendendo-dashboards',
+    link: '/docs/getting-started/entendendo-dashboards',
   },
   {
     title: '🔍 Ask Waizer',
     description: 'Realize investigações profundas em linguagem natural e extraia insights estratégicos.',
-    link: '/docs/ask-waizer',
+    link: '/docs/getting-started/ask-waizer',
   }
 ];
 
