@@ -56,6 +56,9 @@ const config: Config = {
   ],
 
   themeConfig: {
+    metadata: [
+      { name: 'algolia-site-verification', content: '7AEB65A673F60928' },
+    ],
     image: 'img/favicon.png',
     colorMode: {
       defaultMode: 'dark', // Definindo como dark por padrão para alinhar com o site do Waizer
