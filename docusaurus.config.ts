@@ -59,7 +59,7 @@ const config: Config = {
     algolia: {
       appId: 'MIX8COOBCT',
       apiKey: 'ec4e992d2e1fe211df0ad69dce5be414',
-      indexName: 'helpwaizer_netlify_app_mix8coobct_pages',
+      indexName: 'helpwaizer_netlify_app_mix8coobct_articles',
       contextualSearch: true,
       searchPagePath: 'search',
     },

@@ -45,7 +45,7 @@ export default function Home() {
         <div className="search-bar-wrapper">
           <DocSearch
             appId="MIX8COOBCT"
-            indexName="helpwaizer_netlify_app_mix8coobct_pages"
+            indexName="helpwaizer_netlify_app_mix8coobct_articles"
             apiKey="ec4e992d2e1fe211df0ad69dce5be414"
             translations={{
               button: {
