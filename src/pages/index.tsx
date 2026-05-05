@@ -44,9 +44,9 @@ export default function Home() {
         
         <div className="search-bar-wrapper">
           <DocSearch
-            appId="YOUR_APP_ID"
-            indexName="YOUR_INDEX_NAME"
-            apiKey="YOUR_SEARCH_API_KEY"
+            appId="MIX8COOBCT"
+            indexName="helpwaizer_netlify_app_mix8coobct_pages"
+            apiKey="ec4e992d2e1fe211df0ad69dce5be414"
             translations={{
               button: {
                 buttonText: 'Pesquise por "Instalação", "KPIs" ou "Sentimento"...',
