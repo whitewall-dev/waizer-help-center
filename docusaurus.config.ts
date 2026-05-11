@@ -1,5 +1,5 @@
-import {themes as prismThemes} from 'prism-react-renderer';
-import type {Config} from '@docusaurus/types';
+import { themes as prismThemes } from 'prism-react-renderer';
+import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
@@ -68,11 +68,11 @@ const config: Config = {
     ],
     image: 'img/favicon.png',
     colorMode: {
-      defaultMode: 'light', 
+      defaultMode: 'light',
       respectPrefersColorScheme: false,
     },
     navbar: {
-      title: 'Central de ajuda - Waizer',
+      title: 'Ajuda',
       logo: {
         alt: 'Waizer Logo',
         src: 'img/waizer.png',      // Logo usada no tema claro
@@ -91,25 +91,50 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Docs',
+          title: 'SAIBA MAIS',
           items: [
             {
               label: 'Documentação',
               to: '/docs/intro',
             },
+            {
+              label: 'FAQ',
+              to: '/docs/faq',
+            },
+            {
+              label: 'Suporte Técnico',
+              to: 'https://forms.clickup.com/37031866/f/13a3xu-35753/BN9Q0MM9KZDKUC6SSY',
+            },
           ],
         },
         {
-          title: 'Community',
+          title: 'SIGA-NOS',
           items: [
             {
-              label: 'Site Oficial',
-              href: 'https://waizer.ai/',
+              html: `
+        <div class="footer-social-icons">
+          <a href="https://www.instagram.com/whitewall.tech/" target="_blank" rel="noopener noreferrer" style="margin-right: 15px;">
+            <img src="img/social/instagram.svg" alt="Instagram" width="22" height="22" />
+          </a>
+          <a href="https://www.linkedin.com/company/whitewall-tech/" target="_blank" rel="noopener noreferrer" style="margin-right: 15px;">
+            <img src="img/social/linkedin.svg" alt="LinkedIn" width="22" height="22" />
+          </a>
+          <a href="https://www.youtube.com/@WhiteWallTech" target="_blank" rel="noopener noreferrer">
+            <img src="img/social/youtube.svg" alt="YouTube" width="22" height="22" />
+          </a>
+        </div>
+      `,
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Waizer. Built with Docusaurus.`,
+      logo: {
+        alt: 'Waizer Logo',
+        src: 'img/waizer.png',
+        href: 'https://waizer.ai',
+        width: 130,
+      },
+      copyright: `© ${new Date().getFullYear()} Waizer by Wiv. Todos os direitos reservados.`,
     },
     prism: {
       theme: prismThemes.github,

@@ -285,3 +285,276 @@ img.logo-waizer-home,
   font-size: 1.2rem;
 }
 
+.footer {
+  --ifm-footer-background-color: #f9f9f9; 
+  padding: 4rem 0 2rem;
+  border-top: 1px solid #ececec;
+}
+
+
+[data-theme='dark'] .footer {
+  --ifm-footer-background-color: #1b1b1d;
+  border-top-color: #2e2e2e;
+}
+
+
+.footer__title {
+  font-size: 0.75rem !important;
+  font-weight: 800 !important;
+  color: var(--ifm-font-color-base) !important;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 1.5rem;
+}
+
+
+.footer__link-item {
+  font-size: 0.9rem;
+  color: #666 !important;
+}
+
+[data-theme='dark'] .footer__link-item {
+  color: #aaa !important;
+}
+
+
+.footer-social-icons {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-social-icons img {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+[data-theme='dark'] .footer-social-icons img {
+  filter: brightness(0) invert(1); 
+}
+
+
+.footer__bottom {
+  border-top: 1px solid #eee;
+  margin-top: 3rem;
+  padding-top: 2rem;
+}
+
+[data-theme='dark'] .footer__bottom {
+  border-top-color: #2e2e2e;
+}
+
+.footer__copyright {
+  color: #666 !important;
+  font-size: 0.85rem;
+  opacity: 1 !important;
+}
+
+
+[data-theme='dark'] .footer__copyright {
+  color: #aaa !important;
+}
+
+
+.navbar {
+  box-shadow: none; 
+  border-bottom: 1px solid #f0f0f0; 
+  padding: 0.7rem 2rem;
+  background-color: #ffffff;
+}
+
+[data-theme='dark'] .navbar {
+  background-color: #1b1b1d;
+  border-bottom-color: #2e2e2e;
+}
+
+.navbar__brand {
+  margin-right: 2rem;
+}
+
+.navbar__title {
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: -0.5px;
+}
+
+.navbar__item {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.navbar__item:hover,
+.navbar__link--active {
+  color: #00a361 !important;
+}
+
+
+.navbar__search {
+  margin-left: 1rem;
+}
+
+.DocSearch-Button {
+  border-radius: 10px !important;
+  background: #f4f4f7 !important;
+  border: 1px solid transparent !important;
+  transition: all 0.2s ease !important;
+  padding: 0 12px !important;
+}
+
+[data-theme='dark'] .DocSearch-Button {
+  background: #2a2a2e !important;
+}
+
+.DocSearch-Button:hover {
+  border-color: #00f08e !important;
+  background: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(0, 240, 142, 0.1) !important;
+}
+
+.clean-btn.toggleButton_node_modules-\@docusaurus-theme-classic-lib-theme-ColorModeToggle-styles-module {
+  margin-right: 10px;
+}
+
+.navbar__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px; 
+}
+
+.navbar__title {
+  display: none;
+}
+
+.navbar__item {
+  font-size: 0.9rem;
+  opacity: 1;
+}
+
+.navbar__item:hover {
+  opacity: 1;
+  color: #00a361 !important;
+}
+
+.navbar {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05); /* Quase invisível */
+}
+
+.support-section {
+  padding: 4rem 0 6rem 0;
+}
+
+.support-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.support-header h2 {
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+.support-header p {
+  color: #666;
+  font-size: 1.1rem;
+}
+
+[data-theme='dark'] .support-header p {
+  color: #aaa;
+}
+
+.support-grid {
+  display: flex;
+  justify-content: center;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.support-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: #ffffff;
+  border: 1px solid #eaecef;
+  border-radius: 12px;
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+[data-theme='dark'] .support-card {
+  background: #161821;
+  border-color: #2e2e2e;
+}
+
+.support-card:hover {
+  border-color: var(--waizer-green-vibrant);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 240, 142, 0.15);
+}
+
+.support-icon {
+  background-color: #e6f6ef;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme='dark'] .support-icon {
+  background-color: rgba(0, 240, 142, 0.15);
+}
+
+[data-theme='dark'] .support-icon svg {
+  stroke: var(--waizer-green-vibrant);
+}
+
+.support-card {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: #ffffff;
+  border: 1px solid #eaecef;
+  border-radius: 12px;
+  text-decoration: none !important;
+  color: inherit !important;
+  transition: all 0.2s ease;
+  width: 100%;
+}
+
+[data-theme='dark'] .support-card {
+  background: #161821;
+  border-color: #2e2e2e;
+}
+
+.support-content h3 {
+  margin: 0 0 0.5rem 0;
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.support-content p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #666;
+  line-height: 1.5;
+}
+
+[data-theme='dark'] .support-content p {
+  color: #aaa;
+}
+
+@media (max-width: 768px) {
+  .support-header h2 {
+    font-size: 1.8rem;
+  }
+}
+

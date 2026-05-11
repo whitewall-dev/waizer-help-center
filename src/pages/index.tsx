@@ -117,6 +117,36 @@ export default function Home() {
             </Link>
           </div>
         </section>
+
+        <section className="support-section">
+          <div className="container">
+            <div className="support-header">
+              <h2>Ainda precisa de ajuda?</h2>
+            </div>
+            <div className="support-grid">
+              <Link to="https://forms.clickup.com/37031866/f/13a3xu-35753/BN9Q0MM9KZDKUC6SSY" className="support-card">
+                <div className="support-icon">
+                  <svg
+                    viewBox="0 0 24 24"
+                    width="24"
+                    height="24"
+                    fill="none"
+                    stroke="#00a361"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                  </svg>
+                </div>
+                <div className="support-content">
+                  <h3>Suporte técnico oficial</h3>
+                  <p>Estamos aqui para ajudar. Entre em contato com nossos especialistas para resolver qualquer questão.</p>
+                </div>
+              </Link>
+            </div>
+          </div>
+        </section>
       </main>
     </Layout>
   );
