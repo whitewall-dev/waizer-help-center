@@ -3,7 +3,7 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Central de Ajuda - Waizer',
+  title: 'Central de Ajuda',
   tagline: 'Inteligência para as interações do seu chatbot', // Atualizado para o contexto do Waizer
   favicon: 'img/faviconn.png',
 
@@ -68,8 +68,8 @@ const config: Config = {
     ],
     image: 'img/favicon.png',
     colorMode: {
-      defaultMode: 'dark', // Definindo como dark por padrão para alinhar com o site do Waizer
-      respectPrefersColorScheme: true,
+      defaultMode: 'light', 
+      respectPrefersColorScheme: false,
     },
     navbar: {
       title: 'Central de ajuda - Waizer',
