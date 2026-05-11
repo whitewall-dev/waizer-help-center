@@ -558,3 +558,37 @@ img.logo-waizer-home,
   }
 }
 
+.markdown .ideal-img-responsive-container {
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+  display: block;
+}
+
+.markdown .ideal-img-responsive-container img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+[data-theme='dark'] .markdown .ideal-img-responsive-container img {
+  border: 1px solid #2e2e2e;
+}
+
+.markdown [class*='idealImg'] {
+  max-width: 100% !important;
+  height: auto !important;
+  margin: 2rem auto !important;
+  display: block !important;
+}
+
+.markdown [class*='idealImg'] img {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 8px;
+}
+
+.markdown [class*='idealImg'] picture {
+  display: block !important;
+  width: 100% !important;
+}
