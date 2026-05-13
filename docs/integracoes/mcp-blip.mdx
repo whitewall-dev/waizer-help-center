@@ -4,7 +4,7 @@ title: MCP Blip
 description: Permita que o agente de IA consulte e aja no Blip em tempo real durante uma conversa.
 ---
 
-# MCP Blip
+# MCP Blip no Waizer
 
 ## Visão Geral
 
@@ -46,21 +46,33 @@ o Waizer é utilizado dentro da extensão do Blip.
 
 ### Fora da extensão (acesso independente)
 
-Na seção **Integrações** dentro do agente, localize o card do **Blip**. Caso
-o status exiba **Desconectado**, clique no botão **Conectar**. Uma janela do
-portal do Blip será aberta para que você realize o login com suas credenciais.
-Ao concluir, a janela fecha automaticamente e o MCP Blip estará ativo.
+A conexão pode ser feita de dois lugares:
 
-:::note
-Este vínculo é pessoal e precisa ser feito uma única vez por usuário. Uma vez
-conectado, o MCP Blip será ativado automaticamente em todas as sessões futuras
-do agente.
-:::
+**Pelo banner no chat**
+Ao abrir uma conversa com o agente, se a conta ainda não estiver conectada, um
+banner com a mensagem "Conecte sua conta para usar as ferramentas Blip" será
+exibido. Clique no botão **Conectar** diretamente nele. Caso já esteja
+conectado, o banner não será exibido.
+
+**Pelo Perfil do Agente**
+Na barra lateral, acesse o **Perfil do Agente**. Na seção **Integrações**,
+localize o card do **Blip** e clique no botão **Conectar**.
+
+#### Passo a passo
+
+1. Clique em **Conectar** (pelo banner ou pelo Perfil do Agente).
+2. Uma janela do portal do Blip será aberta.
+3. Faça login com a sua conta do Blip que tem acesso ao bot.
+4. A janela será fechada automaticamente assim que a conexão for concluída.
+
+> **Nota:** Este vínculo é pessoal e precisa ser feito uma única vez por
+usuário. Uma vez conectado, o MCP Blip será ativado automaticamente em todas
+as sessões futuras do agente.
 
 ## Observações
 
 - **Acesso ao bot é obrigatório:** usuários sem acesso ao bot dentro do Blip
 não conseguirão utilizar o MCP, mesmo que realizem a conexão.
 - **Dados em tempo real:** as informações consultadas pelo agente via MCP
-refletem o estado atual do bot via Blip no momento da consulta, não dados importados
+refletem o estado atual do Blip no momento da consulta, não dados importados
 previamente pelo Waizer.
