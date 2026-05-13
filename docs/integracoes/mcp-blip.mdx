@@ -1,0 +1,66 @@
+---
+sidebar_position: 1
+title: MCP Blip
+description: Permita que o agente de IA consulte e aja no Blip em tempo real durante uma conversa.
+---
+
+# MCP Blip
+
+## Visão Geral
+
+O MCP Blip é uma integração que permite ao agente de IA do Waizer consultar e
+agir diretamente no Blip durante uma conversa. Com ela, o agente deixa de
+trabalhar apenas com dados históricos e passa a ter acesso a informações em
+tempo real, como tickets em aberto, filas de atendimento e dados de contatos.
+
+Ter um bot Blip integrado ao projeto no Waizer é diferente de ter o MCP Blip
+ativo. A integração do bot permite que a plataforma importe e analise os dados
+desse bot. O MCP vai além: ele permite que o agente execute consultas e ações
+ativas dentro do Blip durante a sessão.
+
+## Pré-requisitos
+
+Para utilizar o MCP Blip, é necessário:
+
+- Ter acesso ao bot dentro do Blip.
+- A organização possuir a integração Blip configurada no projeto do Waizer.
+
+## O que o agente consegue fazer
+
+Com o MCP Blip ativo, o agente tem acesso a:
+
+| Área | Capacidades |
+|---|---|
+| Contatos | Buscar contatos, visualizar histórico de conversa, tickets, variáveis e mensagens |
+| Atendimento humano | Consultar filas, agentes, tickets em espera e histórico de tickets |
+| Analytics | Visualizar categorias, trackings e visão geral do chatbot |
+| WhatsApp | Consultar templates, campanhas, visão geral e diagnóstico de envios ativos |
+| Fluxo | Listar e buscar estados do fluxo |
+
+## Como ativar
+
+### Dentro da extensão do Blip
+
+Nenhuma configuração é necessária. O MCP Blip é ativado automaticamente quando
+o Waizer é utilizado dentro da extensão do Blip.
+
+### Fora da extensão (acesso independente)
+
+Na seção **Integrações** dentro do agente, localize o card do **Blip**. Caso
+o status exiba **Desconectado**, clique no botão **Conectar**. Uma janela do
+portal do Blip será aberta para que você realize o login com suas credenciais.
+Ao concluir, a janela fecha automaticamente e o MCP Blip estará ativo.
+
+:::note
+Este vínculo é pessoal e precisa ser feito uma única vez por usuário. Uma vez
+conectado, o MCP Blip será ativado automaticamente em todas as sessões futuras
+do agente.
+:::
+
+## Observações
+
+- **Acesso ao bot é obrigatório:** usuários sem acesso ao bot dentro do Blip
+não conseguirão utilizar o MCP, mesmo que realizem a conexão.
+- **Dados em tempo real:** as informações consultadas pelo agente via MCP
+refletem o estado atual do bot via Blip no momento da consulta, não dados importados
+previamente pelo Waizer.
