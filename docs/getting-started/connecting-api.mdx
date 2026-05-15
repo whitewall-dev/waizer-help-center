@@ -8,6 +8,12 @@ description: Use a API do Waizer para enviar conversas de qualquer plataforma e 
 
 # Integração via API
 
+:::info[Modalidade: Integração Contínua]
+Nesta modalidade, é o seu sistema que envia dados ao Waizer via HTTP, à medida que as conversas acontecem. Você controla o quê, quando e como os dados chegam — sem uploads manuais nem agendamentos.
+
+Quer entender as diferenças entre as modalidades? Veja o [guia de tipos de integração](/getting-started/integration-types).
+:::
+
 A integração via API permite que você envie conversas de qualquer plataforma diretamente para o Waizer, sem depender de integrações nativas. É a opção ideal para chatbots customizados, plataformas proprietárias ou fluxos que exigem transformação de dados antes da análise.
 
 ---
@@ -147,4 +153,4 @@ Confirme que o `projectId` existe e que a chave de API tem permissão de acesso 
 O body da requisição tem um problema de formato. Revise os campos obrigatórios e os tipos de dados, especialmente o formato dos timestamps.
 
 **Conversas enviadas com sucesso, mas sem análise no dashboard**
-O processamento de IA é assíncrono. Aguarde alguns minutos. Conversas com menos de 5 mensagens trocadas (entre bot e usuário) podem não gerar análise completa.
+O processamento de IA é assíncrono e ocorre em ciclos automáticos diários. Aguarde até o próximo ciclo. Conversas com menos de 5 mensagens trocadas (entre bot e usuário) podem não gerar análise completa. Para entender o ciclo de processamento e boas práticas de backfill histórico via API, veja [Processamento e boas práticas](/getting-started/processing).

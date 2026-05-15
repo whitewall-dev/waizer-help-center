@@ -1,0 +1,106 @@
+---
+id: integration-types
+title: Tipos de integração
+sidebar_label: Tipos de integração
+sidebar_position: 0
+description: Entenda a diferença entre importação manual (CSV), importação recorrente (Blip) e integração contínua (API) — e saiba qual escolher para o seu caso.
+---
+
+# Tipos de integração
+
+O Waizer suporta três modalidades de integração. A diferença principal está em **quem aciona a entrada de dados**, **com que frequência** o dashboard é atualizado e **quanto esforço técnico** cada opção exige.
+
+---
+
+## Importação Manual
+
+**Modalidade CSV — você dispara o processamento quando quiser.**
+
+Você exporta conversas da sua plataforma, formata os dados em CSV e faz o upload no Waizer. O processamento começa quando você confirma. O dashboard só é atualizado quando você envia um novo arquivo — não há sincronização automática.
+
+**Fonte de dados:** qualquer plataforma que permita exportar conversas em CSV.
+
+**Use quando:**
+- Você quer analisar dados históricos ou de um período específico no passado.
+- Seu chatbot está em uma plataforma sem integração nativa com o Waizer.
+- Você quer testar o produto com uma amostra de dados antes de configurar uma integração automatizada.
+- O projeto é pontual e não exige atualização contínua.
+
+**Limitação:** requer ação manual a cada atualização — não existe sincronização automática.
+
+→ [Guia completo: Importação por CSV](/getting-started/connecting-csv)
+
+---
+
+## Importação Recorrente
+
+**Modalidade Blip — o Waizer busca os dados automaticamente, todos os dias.**
+
+Você conecta o Waizer ao seu chatbot no Blip uma única vez. A partir daí, o Waizer importa novas conversas automaticamente em intervalos diários. O dashboard se atualiza sem nenhuma ação adicional da sua parte.
+
+**Fonte de dados:** exclusivamente chatbots hospedados no Blip.
+
+**Use quando:**
+- Seu chatbot está no Blip e você quer análise contínua sem esforço operacional.
+- Você precisa que o dashboard reflita o desempenho recente do chatbot sem intervenção manual.
+- Você quer monitorar tendências ao longo do tempo com dados sempre atualizados.
+
+**Limitação:** disponível apenas para chatbots no Blip.
+
+→ [Guia completo: Integração Blip](/getting-started/connecting-blip)
+
+---
+
+## Integração Contínua
+
+**Modalidade API — seu sistema envia dados ao Waizer à medida que as conversas acontecem.**
+
+Você integra o Waizer à sua plataforma via API HTTP. Sempre que uma conversa é encerrada (ou em qualquer evento que você definir), seu sistema envia os dados diretamente para o Waizer. Não há exports, uploads nem agendamentos — os dados chegam em tempo real, no ritmo da sua operação.
+
+**Fonte de dados:** qualquer plataforma — você controla o quê, quando e como os dados são enviados.
+
+**Use quando:**
+- Seu chatbot está em uma plataforma proprietária ou sem integração nativa com o Waizer.
+- Você precisa transformar ou enriquecer os dados antes de enviá-los para análise.
+- Você quer controle total sobre quais dados chegam ao Waizer e em que momento.
+- O seu time tem capacidade técnica para implementar o envio via API.
+
+**Limitação:** requer desenvolvimento para implementar a integração.
+
+→ [Guia completo: Integração via API](/getting-started/connecting-api)
+
+---
+
+## Comparativo
+
+|  | Importação Manual | Importação Recorrente | Integração Contínua |
+|---|---|---|---|
+| **Fonte de dados** | Qualquer (via CSV) | Blip | Qualquer (via API) |
+| **Quem envia os dados** | Você (upload manual) | Waizer (busca automática) | Seu sistema (push) |
+| **Frequência de atualização** | A cada upload | Diária, automática | Em tempo real |
+| **Processamento** | Assíncrono, iniciado por você | Assíncrono, automático toda madrugada | Ingestão em tempo real; análise diária |
+| **Exige desenvolvimento** | Não | Não | Sim |
+| **Dados históricos** | Sim | Sim | Sim (após o envio) |
+| **Período de avaliação** | — | Sim (10 dias gratuitos) | — |
+
+Para estimativas de tempo e boas práticas de carga D-1 e histórica, veja [Processamento e boas práticas](/getting-started/processing).
+
+---
+
+## Como escolher
+
+**Seu chatbot está no Blip?**
+Use a **Importação Recorrente**. É a opção mais simples: conecte uma vez e o Waizer cuida do resto.
+
+**Seu chatbot está em outra plataforma e você não precisa de atualizações automáticas?**
+Use a **Importação Manual (CSV)**. Exporte seus dados, formate em CSV e faça o upload.
+
+**Seu chatbot está em uma plataforma customizada e você quer dados em tempo real com controle total?**
+Use a **Integração Contínua (API)**. Você decide exatamente o que chega ao Waizer e quando.
+
+**Quer testar o Waizer antes de qualquer integração?**
+Comece com a **Importação Manual**: exporte uma amostra de conversas em CSV e veja o produto funcionando com seus dados reais, sem nenhuma configuração técnica.
+
+:::note[Posso usar mais de uma modalidade?]
+Não é possível combinar modalidades no mesmo projeto. Cada projeto tem uma única fonte de dados. Se precisar analisar fontes diferentes, crie projetos separados.
+:::

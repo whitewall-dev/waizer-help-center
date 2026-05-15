@@ -1,0 +1,147 @@
+---
+id: data-privacy
+title: Privacidade e Tratamento de Dados Pessoais
+sidebar_label: Privacidade e Dados Pessoais
+sidebar_position: 2
+description: Como o Waizer trata dados pessoais presentes em conversas, quais dados chegam a provedores de IA e quais são as responsabilidades do cliente para garantir conformidade com a LGPD.
+---
+
+# Privacidade e Tratamento de Dados Pessoais
+
+Este artigo descreve tecnicamente como o Waizer processa dados pessoais presentes em conversas, o que é compartilhado com provedores de inteligência artificial e as responsabilidades do cliente para uso em conformidade com a LGPD e outras regulações aplicáveis.
+
+---
+
+## O que o Waizer processa
+
+O Waizer analisa conversas entre usuários e chatbots. Essas conversas podem conter — dependendo do contexto do chatbot — dados pessoais como nomes, números de telefone, CPF, dados de cartão, endereços ou outras informações sensíveis.
+
+O Waizer **não tem conhecimento do tipo de dado** que trafega nas conversas do seu chatbot. Qualquer dado presente no conteúdo das mensagens será:
+
+1. **Armazenado** nos bancos de dados do Waizer (ClickHouse e PostgreSQL).
+2. **Enviado para análise** por provedores de inteligência artificial externos.
+
+---
+
+## Mascaramento e anonimização de dados pessoais
+
+**O Waizer não possui mecanismos nativos de detecção, mascaramento ou anonimização de dados pessoais.**
+
+O conteúdo das conversas é processado como recebido, sem filtragem de identificadores pessoais antes do armazenamento ou antes do envio aos provedores de IA.
+
+A responsabilidade pela anonimização ou pseudonimização de dados pessoais antes da ingestão é **inteiramente do cliente**.
+
+### Quando anonimizar antes de enviar ao Waizer
+
+Se as conversas do seu chatbot coletam ou exibem qualquer um dos dados abaixo, você deve anonimizá-los ou removê-los antes de ingeri-los no Waizer:
+
+| Tipo de dado | Exemplos |
+|---|---|
+| Identificadores nacionais | CPF, RG, CNPJ |
+| Dados de pagamento | Número de cartão, CVV, dados bancários |
+| Dados de saúde | Diagnósticos, laudos, prescrições |
+| Dados sensíveis (LGPD art. 5º, II) | Origem racial, opinião política, religião, biometria |
+| Dados de menores | Qualquer dado de pessoa abaixo de 18 anos |
+
+Para dados como nome e telefone, avalie o nível de sensibilidade no contexto do seu produto e da finalidade da análise. Em caso de dúvida, prefira a pseudonimização.
+
+:::tip[Boas práticas de anonimização antes da ingestão]
+- Substitua CPF, cartão e outros identificadores por tokens opacos antes do envio.
+- Para o campo `threadId` (que em integrações WhatsApp pode ser o número de telefone do usuário), use um identificador interno em vez do número real.
+- Remova ou substitua por `[REDACTED]` qualquer conteúdo sensível que não seja necessário para a análise conversacional.
+:::
+
+---
+
+## Identificadores de conversa (threadId)
+
+O `threadId` é o identificador único de cada conversa. Em integrações com o Blip via WhatsApp, esse valor corresponde ao **número de telefone do contato** — um dado pessoal direto.
+
+O `threadId` é armazenado em texto puro nos bancos de dados do Waizer e incluído nos metadados enviados aos provedores de IA.
+
+**Recomendação:** sempre que possível, configure o campo `threadId` para usar um identificador interno pseudonimizado em vez do número de telefone ou CPF do usuário.
+
+---
+
+## Dados compartilhados com provedores de IA
+
+O Waizer utiliza dois provedores externos de inteligência artificial:
+
+| Provedor | Finalidade |
+|---|---|
+| **OpenAI** | Análise de conversas: sentimento, erros, tópicos, handoffs |
+| **Anthropic** | Assistente de IA embutido (Ask Waizer) |
+
+### O que é enviado ao provedor de IA
+
+Para cada conversa analisada, o seguinte é enviado ao provedor de IA:
+
+- **Conteúdo completo das mensagens** — todo o texto trocado entre usuário e chatbot
+- **Metadados da conversa** — timestamp, direção (enviado/recebido), identificador do agente
+
+O conteúdo enviado reflete diretamente o que foi ingerido no Waizer. Se as conversas contêm dados pessoais, esses dados chegam ao provedor de IA.
+
+### Roteamento via Cloudflare AI Gateway
+
+Todas as chamadas aos provedores de IA passam pelo **Cloudflare AI Gateway**, que atua como proxy intermediário. O gateway oferece controle de acesso, monitoramento e cache, mas **não realiza filtragem ou mascaramento do conteúdo** das requisições.
+
+---
+
+## Garantias dos provedores de IA sobre uso dos dados
+
+Tanto a OpenAI quanto a Anthropic possuem políticas explícitas para clientes que utilizam suas APIs comerciais:
+
+**OpenAI API:**
+- Dados enviados via API **não são usados para treinar modelos** por padrão.
+- A OpenAI oferece um Data Processing Agreement (DPA) para clientes empresariais.
+- Clientes podem solicitar retenção zero de dados (*zero data retention*) mediante acordo contratual.
+
+**Anthropic API:**
+- Dados enviados via API **não são usados para treinar modelos** por padrão.
+- A Anthropic oferece um DPA para clientes com contratos empresariais.
+
+:::note[Importante]
+Essas garantias se aplicam ao uso via API. Elas são distintas das políticas dos produtos de consumo (como o ChatGPT ou Claude.ai), que podem ter termos diferentes. O Waizer utiliza exclusivamente as APIs comerciais.
+
+Para obter cópias dos DPAs ou informações detalhadas sobre retenção de dados nos provedores, consulte diretamente a documentação de privacidade da OpenAI e da Anthropic ou entre em contato com o time do Waizer.
+:::
+
+---
+
+## Isolamento de dados entre organizações
+
+Os dados de cada organização são isolados no banco de dados por `integrationId`, com políticas de controle de acesso em nível de linha (Row-Level Security) aplicadas diretamente no ClickHouse. Nenhuma consulta pode retornar dados de outra organização.
+
+---
+
+## Retenção de dados
+
+O Waizer não aplica políticas automáticas de exclusão ou expiração de dados. Conversas e análises são retidas indefinidamente enquanto o projeto existir.
+
+Se você precisar excluir dados de um usuário específico por obrigação legal (ex: direito de exclusão previsto na LGPD), entre em contato com o suporte do Waizer. A exclusão seletiva de dados por `threadId` é tecnicamente possível, mas deve ser realizada pela equipe do Waizer mediante solicitação.
+
+---
+
+## Resumo de responsabilidades
+
+| Responsabilidade | Quem executa |
+|---|---|
+| Anonimizar dados pessoais antes da ingestão | **Cliente** |
+| Usar threadIds pseudonimizados | **Cliente** |
+| Não armazenar dados que o chatbot não deve coletar | **Cliente** |
+| Garantir que dados de API não sejam usados para treinamento | **OpenAI e Anthropic** (por contrato) |
+| Isolar dados entre organizações | **Waizer** |
+| Processar solicitações de exclusão de dados | **Waizer** (mediante solicitação) |
+
+---
+
+## Perguntas frequentes
+
+**O Waizer assina DPA (Data Processing Agreement)?**
+Para contratos empresariais, sim. Entre em contato com o time comercial do Waizer para obter o DPA.
+
+**Posso usar o Waizer para analisar dados de saúde ou dados sensíveis conforme a LGPD?**
+Tecnicamente sim, mas você é responsável por obter as bases legais adequadas e garantir que os dados sejam tratados em conformidade com a LGPD — inclusive pelos subprocessadores (OpenAI e Anthropic). Avalie com seu DPO antes de ingerir dados sensíveis.
+
+**O Waizer está em conformidade com a LGPD?**
+O Waizer adota práticas de segurança como isolamento de dados por organização, criptografia em trânsito e controles de acesso. No entanto, a conformidade com a LGPD depende também do uso que o cliente faz da plataforma, especialmente no que diz respeito à anonimização de dados pessoais antes da ingestão. Consulte o time do Waizer para uma avaliação específica do seu caso de uso.

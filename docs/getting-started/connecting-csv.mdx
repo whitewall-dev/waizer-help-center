@@ -8,6 +8,12 @@ description: Saiba como preparar e importar arquivos CSV no formato WCF (Waizer 
 
 # Importando arquivos CSV
 
+:::info[Modalidade: Importação Manual]
+Nesta modalidade, você prepara os dados e dispara o processamento quando quiser. Não há sincronização automática — o dashboard é atualizado apenas quando você faz um novo upload.
+
+Quer entender as diferenças entre as modalidades? Veja o [guia de tipos de integração](/getting-started/integration-types).
+:::
+
 A importação por CSV permite carregar conversas de qualquer plataforma no Waizer — ideal para análise de dados históricos, migração de sistema ou fontes sem integração nativa.
 
 O Waizer utiliza o **WCF (Waizer Conversation Format)**, um formato padronizado em CSV que garante que os dados sejam processados corretamente pelas análises de IA.
@@ -203,6 +209,20 @@ O exemplo abaixo simula três conversas de suporte: uma consulta de pedido encer
 
 ---
 
+## Limites de upload
+
+| Limite | Valor |
+|---|---|
+| **Tamanho máximo por arquivo** | 25 MB |
+| **Número máximo de arquivos por projeto** | 100 arquivos |
+| **Limite de linhas por arquivo** | Sem limite fixo — condicionado ao tamanho de 25 MB |
+
+**25 MB por arquivo** corresponde a aproximadamente 80.000–120.000 linhas de mensagem, dependendo do comprimento dos textos. Se o seu arquivo for maior, divida por período (mês a mês) antes de fazer o upload.
+
+**100 arquivos por projeto** é o total acumulado — não é uma cota mensal. Quem faz uploads frequentes (semanais ou diários) pode atingir esse limite ao longo do tempo. Para evitar isso, prefira consolidar os dados em arquivos maiores por período (ex: um arquivo por mês) em vez de um arquivo por dia. Se você já atingiu o limite, entre em contato com o suporte.
+
+---
+
 ## Regras de formatação do CSV
 
 Siga estas regras para garantir que o arquivo seja aceito corretamente:
@@ -210,7 +230,7 @@ Siga estas regras para garantir que o arquivo seja aceito corretamente:
 | Regra | Detalhe |
 |---|---|
 | **Encoding** | UTF-8 (sem BOM) |
-| **Separador** | Vírgula (`,`) |
+| **Separador** | Vírgula (`,`) ou ponto e vírgula (`;`) |
 | **Cabeçalho** | Obrigatório na primeira linha, com os nomes exatos dos campos |
 | **Aspas em campos** | Campos que contenham vírgulas, quebras de linha ou aspas devem ser envolvidos em aspas duplas (`"`) |
 | **Aspas dentro de campos** | Escape com aspas duplas: `"` → `""` |
@@ -248,9 +268,9 @@ O Waizer valida automaticamente o formato antes de processar. Se houver erros, v
 
 ### 4. Confirme e processe
 
-Após a validação bem-sucedida, clique em **Iniciar processamento**. Acompanhe o progresso em **Configurações → Progresso da importação**.
+Após a validação bem-sucedida, clique em **Iniciar processamento**. O processamento é **assíncrono** — você pode fechar o browser e ele continua em background. Acompanhe o progresso em **Configurações → Progresso da importação**.
 
-O tempo de processamento varia com o volume de dados. Arquivos com até 10.000 mensagens costumam ser processados em menos de 5 minutos.
+O tempo varia com o volume de dados. Arquivos com até 10.000 mensagens costumam ser processados em menos de 5 minutos; volumes maiores podem levar mais tempo. Para estimativas detalhadas e boas práticas de importação histórica, veja [Processamento e boas práticas](/getting-started/processing).
 
 ---
 
@@ -265,6 +285,12 @@ O Waizer deduplica mensagens com base na combinação de `threadId` + `timestamp
 ---
 
 ## Solução de problemas
+
+**Erro: "Arquivo excede o limite"**
+O arquivo enviado ultrapassa 25 MB. Divida os dados em arquivos menores por período (ex: um arquivo por mês) e faça os uploads separadamente.
+
+**Erro: "Não é possível fazer upload de mais de 100 arquivos"**
+O projeto atingiu o limite de 100 arquivos. Consulte o suporte para liberar espaço ou reorganizar os arquivos existentes.
 
 **Erro: "Formato de arquivo inválido"**
 Verifique se o arquivo está salvo como `.csv` (não Excel) e se todas as colunas obrigatórias estão presentes com os nomes exatos: `threadId`, `type`, `direction`, `content`, `agentId`, `timestamp`.

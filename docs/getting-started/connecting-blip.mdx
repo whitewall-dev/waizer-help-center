@@ -8,7 +8,13 @@ description: Aprenda a conectar o Waizer ao seu chatbot no Blip usando autentica
 
 # Conectando com o Blip
 
-A integração com o Blip é a forma mais rápida de começar a analisar conversas com o Waizer. Com ela, o Waizer acessa automaticamente o histórico de conversas do seu chatbot e mantém os dados atualizados de forma contínua.
+:::info[Modalidade: Importação Recorrente]
+Nesta integração, o Waizer busca novas conversas no Blip automaticamente todos os dias. Você conecta uma vez — o dashboard se atualiza sozinho.
+
+Quer entender as diferenças entre as modalidades? Veja o [guia de tipos de integração](/getting-started/integration-types).
+:::
+
+A integração com o Blip é a forma mais rápida de começar a analisar conversas com o Waizer. Você conecta o Waizer ao seu chatbot uma única vez e, a partir daí, novos dados são importados automaticamente em intervalos diários — sem uploads, sem configurações recorrentes.
 
 ---
 
@@ -41,9 +47,9 @@ O Waizer solicita apenas permissões de **leitura** no Blip. Nenhuma conversa ou
 
 ### 3. Acompanhe a ingestão
 
-Após a autenticação, o Waizer começará a importar as conversas do Blip. Você pode acompanhar o andamento na aba **Configurações → Progresso da importação**.
+Após a autenticação, o Waizer começará a importar as conversas do Blip. O processamento é **assíncrono** — você pode fechar o browser e ele continua rodando em background. Acompanhe o andamento em **Configurações → Progresso da importação**.
 
-O tempo de processamento varia conforme o volume de conversas do chatbot.
+O tempo varia com o volume de conversas: de poucos minutos para chatbots pequenos a mais de uma hora para históricos extensos. Veja as estimativas detalhadas em [Processamento e boas práticas](/getting-started/processing).
 
 ---
 
@@ -61,7 +67,9 @@ Ao conectar um chatbot Blip pela primeira vez, a integração entra em **períod
 
 ## Atualização dos dados
 
-Após a configuração inicial, o Waizer sincroniza automaticamente novas conversas do Blip em intervalos regulares. Não é necessário nenhuma ação adicional — seu dashboard estará sempre atualizado.
+Após a configuração inicial, o Waizer importa automaticamente novas conversas do Blip uma vez ao dia. Não é necessária nenhuma ação adicional — seu dashboard refletirá o desempenho recente do chatbot sem intervenção manual.
+
+Para boas práticas de monitoramento diário (carga D-1) e dicas para a importação inicial do histórico completo, veja [Processamento e boas práticas](/getting-started/processing).
 
 ---
 

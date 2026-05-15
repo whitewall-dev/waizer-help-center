@@ -1,0 +1,134 @@
+---
+id: processing
+title: Processamento de dados
+sidebar_label: Processamento e boas práticas
+sidebar_position: 5
+description: Entenda como o Waizer processa dados em background, quanto tempo leva e quais são as boas práticas para cargas D-1 e importações históricas.
+---
+
+# Processamento de dados
+
+Independente da modalidade de integração, o processamento no Waizer é **assíncrono** — a análise roda em background e você não precisa manter o browser aberto durante o processo.
+
+---
+
+## O que acontece após o envio dos dados
+
+Toda importação passa pelas mesmas etapas:
+
+| Etapa | O que acontece |
+|---|---|
+| **1. Busca** | O Waizer recupera as conversas da fonte configurada (arquivo, Blip ou banco interno) |
+| **2. Análise por IA** | Cada conversa é analisada individualmente: sentimento, erros, tópicos, handoffs para humanos |
+| **3. Consolidação** | Os resultados são agregados no dashboard: classificações, tendências, nuvem de palavras |
+
+As etapas 1 e 3 são rápidas. A etapa 2 é o gargalo — o tempo de processamento escala principalmente com o número de conversas.
+
+---
+
+## Acompanhando o progresso
+
+Acesse **Configurações → Progresso da importação** para acompanhar em tempo real:
+
+- **Barra de progresso** (0–100%) com atualização automática
+- **Mensagem de status** descrevendo a etapa em andamento
+- **Histórico de execuções** com horários de início e conclusão
+
+Você pode fechar o browser sem interromper o processamento — ele continua rodando em background.
+
+---
+
+## Tempo estimado de processamento
+
+O tempo varia principalmente com o número de conversas analisadas:
+
+| Volume de conversas | Tempo estimado |
+|---|---|
+| Até 100 | 5–10 minutos |
+| 100 a 1.000 | 15–30 minutos |
+| 1.000 a 5.000 | 30–60 minutos |
+| Acima de 5.000 | 1 hora ou mais |
+
+:::note
+Esses valores são estimativas. Conversas com muitas mensagens levam mais tempo do que conversas curtas com o mesmo número de threads.
+:::
+
+---
+
+## Boas práticas para cargas D-1
+
+Cargas D-1 são importações das conversas do dia anterior — o modelo típico de quem monitora o chatbot com regularidade.
+
+### Blip (importação recorrente)
+
+A carga D-1 do Blip acontece automaticamente todas as madrugadas. O Waizer importa apenas as conversas novas ou atualizadas desde a última importação.
+
+- Consulte o dashboard no início do dia útil — os dados da véspera já estarão disponíveis.
+- Não dispare importações manuais nos dias em que a automação já rodou, a não ser que precise de dados urgentes antes do próximo ciclo automático.
+- Se o dashboard não atualizar por mais de 24h, verifique em **Configurações → Histórico de importações** se houve erro. Se sim, acione uma nova importação manualmente.
+
+### CSV (importação manual)
+
+Se você exporta dados da sua plataforma todos os dias, estabeleça um processo consistente:
+
+- Exporte e importe no mesmo horário todos os dias para manter um padrão previsível.
+- O arquivo de cada dia deve conter apenas as conversas daquele período — se houver sobreposição com uploads anteriores, o Waizer deduplica automaticamente.
+- Envie apenas conversas **finalizadas**. Conversas ainda em andamento no momento do export tendem a gerar análises imprecisas.
+
+### API (integração contínua)
+
+Na integração via API, as conversas chegam em tempo real à medida que seu sistema as envia. O Waizer consolida e analisa os dados acumulados uma vez ao dia.
+
+- Envie cada conversa assim que ela for **encerrada**, não durante.
+- Para que o dashboard do dia seguinte reflita todos os dados do dia anterior, garanta que todas as conversas encerradas até meia-noite foram enviadas antes desse horário.
+
+---
+
+## Boas práticas para cargas históricas
+
+Uma carga histórica traz um grande volume de dados do passado — típica na configuração inicial de um projeto.
+
+### Valide antes de importar tudo
+
+Antes de importar semanas ou meses de dados, faça uma importação de amostra com uma semana representativa. Confirme que o dashboard exibe o que você espera — erros de formatação ou dados faltantes são muito mais simples de corrigir com volume reduzido.
+
+### Divida por período
+
+Para volumes grandes, importe por período (mês a mês ou trimestre a trimestre). Isso facilita a identificação de problemas pontuais e evita reprocessamentos completos quando algo dá errado em um período específico. O Waizer deduplica automaticamente sobreposições de datas.
+
+### Reserve tempo e escolha o horário certo
+
+Importações históricas de chatbots com alto volume podem levar horas. Planeje a carga inicial para um horário de baixo impacto — preferencialmente à noite ou no fim de semana — e não dependa do dashboard durante o processo.
+
+### Por modalidade
+
+**Blip — carga inicial do período completo**
+
+Ao conectar o Blip com plano Full, o Waizer importa automaticamente os últimos 3 meses de histórico na primeira execução. Para chatbots com alto volume, aguarde a conclusão antes de avaliar as métricas.
+
+Para dados anteriores a 3 meses, exporte esse período como CSV e importe manualmente como complemento.
+
+**CSV — histórico longo**
+
+Divida os arquivos por mês. Além de facilitar o gerenciamento, você pode reenviar um mês específico em caso de erro sem reprocessar tudo.
+
+**API — backfill histórico**
+
+Para preencher o Waizer com dados passados via API, envie as conversas em ordem cronológica, das mais antigas para as mais recentes. Trabalhe em lotes menores (por semana ou mês) e aguarde cada lote ser processado antes de continuar.
+
+---
+
+## O que fazer se o processamento falhar
+
+O Waizer não retoma automaticamente de onde parou em caso de falha. Para reiniciar:
+
+1. Acesse **Configurações → Histórico de importações**.
+2. Localize a importação com erro e verifique a mensagem de diagnóstico.
+3. Corrija o problema indicado (por exemplo: credenciais expiradas, arquivo com formato inválido).
+4. Acione uma nova importação.
+
+O reprocessamento é seguro — o Waizer deduplica os dados e não cria duplicatas no dashboard.
+
+:::warning[Falha por instabilidade técnica]
+Se a mensagem de erro não indicar um problema nos seus dados (por exemplo, "Task interrupted"), aguarde alguns minutos antes de tentar novamente. O sistema pode estar se recuperando de uma instabilidade pontual.
+:::

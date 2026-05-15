@@ -49,36 +49,55 @@ Com o SSO forçado ativado, apenas usuários autenticados via esse provedor pode
 
 ## SAML (SSO empresarial)
 
-O SAML permite integrar o Waizer com provedores de identidade corporativos como Okta, Azure AD, OneLogin ou qualquer IdP compatível com SAML 2.0.
+O SAML permite integrar o Waizer com provedores de identidade corporativos compatíveis com SAML 2.0. Os provedores homologados são **Okta** e **Azure AD (Entra ID)**; outros IdPs compatíveis com SAML 2.0 também funcionam, mas não têm suporte oficial.
 
 ### Configuração do SAML
 
 Acesse **Configurações da organização → Segurança → SAML**.
 
-Você precisará de dois conjuntos de informações:
+A configuração exige trocar metadados entre o Waizer e o seu IdP em dois passos.
 
-**Informações que você fornece ao seu IdP:**
+#### Passo 1 — Registre o Waizer no seu IdP
+
+Insira os seguintes valores do Waizer na configuração do seu provedor de identidade:
+
 | Campo | Valor |
 |---|---|
-| **Entity ID** | Gerado pelo Waizer (disponível na tela de configuração) |
-| **ACS URL** | URL de callback do Waizer (disponível na tela de configuração) |
+| **Identifier (Entity ID)** | `https://app.waizer.ai/saml/{org_id}` |
+| **Assertion Consumer Service (ACS) URL** | `https://api.analyzer.whitewall.dev/auth/saml/acs` |
+| **Single Sign-On URL** | `https://api.analyzer.whitewall.dev/auth/saml/{org_id}/login` |
+| **Single Logout Service (SLS) URL** | `https://api.analyzer.whitewall.dev/auth/saml/sls` |
 
-**Informações que você obtém do seu IdP:**
-| Campo | Descrição |
-|---|---|
-| **SSO URL** | URL de login do seu provedor de identidade |
-| **Certificado X.509** | Certificado público do IdP para validação de assinaturas |
+Os campos com `{org_id}` contêm o identificador único da sua organização. Os valores completos estão disponíveis em **Configurações → Segurança → SAML** — copie diretamente dali para evitar erros.
+
+#### Passo 2 — Insira as informações do seu IdP no Waizer
+
+Após registrar o Waizer no seu IdP, copie os metadados gerados por ele e preencha no Waizer:
+
+| Campo | Obrigatório | Descrição |
+|---|---|---|
+| **Entity ID** | Sim | Identificador único do seu provedor de identidade |
+| **SSO URL** | Sim | URL de login SAML do IdP |
+| **Certificado X.509** | Sim | Certificado público do IdP para validação de assinaturas (formato `.cer` ou `.pem`) |
+| **Logout URL** | Não | URL para encerramento centralizado de sessão no IdP |
+
+:::tip[Azure AD — onde encontrar o certificado]
+No portal do Azure, acesse a configuração do aplicativo SAML e clique na aba **SAML Signing Certificate**. Baixe o arquivo em **Certificate (Base64)** — esse é o certificado X.509 que você deve inserir no Waizer.
+:::
 
 ### Domínios autorizados
 
-Na configuração SAML, você pode especificar **domínios de e-mail autorizados** (ex: `empresa.com.br`). Apenas usuários com e-mails nesses domínios poderão fazer login via SAML.
+Informe ao menos um **domínio de e-mail autorizado** (ex: `empresa.com.br`). Apenas usuários com e-mails nesses domínios poderão fazer login via SAML. Você pode adicionar múltiplos domínios se a organização usar mais de um.
 
 ### Testando a configuração
 
-Após inserir as informações, clique em **Testar conexão** antes de ativar o SAML. Isso valida se o fluxo de autenticação está funcionando corretamente sem impactar usuários existentes.
+Após preencher todos os campos, clique em **Testar conexão** antes de ativar o SAML. Isso valida o fluxo de autenticação sem impactar os usuários existentes.
 
 :::warning[Ative com cuidado]
-Ativar o SAML com configurações incorretas pode bloquear o acesso de todos à organização. Sempre teste a conexão primeiro e mantenha um admin com acesso alternativo durante a migração.
+Ao ativar o SAML, o acesso passa a ser controlado exclusivamente pelo IdP. Usuários não provisionados corretamente no IdP perderão o acesso à organização. Antes de ativar:
+- Teste a conexão com um usuário de teste.
+- Confirme que todos os membros existentes estão provisionados no IdP.
+- Mantenha ao menos um admin com acesso alternativo durante a migração.
 :::
 
 ---

@@ -51,7 +51,13 @@ Dê um nome descritivo ao seu projeto (ex: "Bot de Atendimento", "Fluxo de Venda
 
 ## 4. Conecte sua fonte de dados
 
-Com o projeto criado, o Waizer exibirá o assistente de onboarding. Selecione de onde virão as conversas:
+Com o projeto criado, o Waizer exibirá o assistente de onboarding. Existem três modalidades de integração — a escolha certa depende de onde estão suas conversas e se você precisa de atualização automática:
+
+- **Importação Manual (CSV)** — faça upload de arquivos com conversas de qualquer plataforma. Nenhuma automação, nenhuma configuração técnica. Ideal para dados históricos ou para testar o Waizer antes de uma integração definitiva.
+- **Importação Recorrente (Blip)** — conecte um chatbot do Blip e o Waizer importa novas conversas automaticamente todos os dias. Conecte uma vez e pronto.
+- **Integração Contínua (API)** — seu sistema envia conversas para o Waizer via HTTP à medida que elas acontecem. Controle total, mas exige desenvolvimento.
+
+Não sabe qual escolher? Veja o [guia de tipos de integração](/getting-started/integration-types).
 
 import DocCardList from '@theme/DocCardList';
 

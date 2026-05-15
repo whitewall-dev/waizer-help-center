@@ -10,9 +10,11 @@ const sidebars = {
       collapsed: false,
       items: [
         'getting-started/index',
+        'getting-started/integration-types',
         'getting-started/connecting-blip',
         'getting-started/connecting-csv',
         'getting-started/connecting-api',
+        'getting-started/processing',
       ],
     },
     'dashboard/index',
@@ -28,7 +30,15 @@ const sidebars = {
         'organizations/api-keys',
       ],
     },
-    'security/index',
+    {
+      type: 'category',
+      label: 'Segurança',
+      collapsed: false,
+      items: [
+        'security/index',
+        'security/data-privacy',
+      ],
+    },
   ],
 };
 
