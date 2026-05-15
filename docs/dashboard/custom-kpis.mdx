@@ -12,7 +12,7 @@ description: Como criar KPIs personalizados no Waizer, adaptar a análise ao con
 
 ## O que são os KPIs personalizados no Waizer
 
-Os KPIs personalizados no Waizer são **descrições de negócio** que você define para ajudar a IA a interpretar as conversas no contexto da sua operação. Eles não criam novas colunas no dashboard nem alteram os cálculos das métricas existentes — o que fazem é moldar como a IA enquadra a análise nos **relatórios gerados** e nas respostas do **assistente Ask Waizer**.
+Os KPIs personalizados no Waizer são **descrições de negócio** que você define para ajudar a IA a interpretar as conversas no contexto da sua operação. Eles não criam novas colunas no dashboard, não alteram os cálculos das métricas existentes e **não afetam o score de desempenho** — o que fazem é moldar como a IA enquadra a análise nos **relatórios gerados** e nas respostas do **assistente Ask Waizer**.
 
 Pense assim: sem KPIs personalizados, a IA avalia conversas com critérios genéricos. Com eles, a IA sabe que aquele chatbot é um bot de cobrança de segunda chance cuja meta é reverter inadimplência — e enquadra os insights nesse objetivo específico.
 
@@ -204,3 +204,5 @@ Isso é especialmente importante quando múltiplas pessoas da equipe acessam o W
 :::tip[Revisite os KPIs a cada mudança de fluxo]
 Sempre que o fluxo do chatbot mudar de forma significativa, revise as descrições dos KPIs. Um KPI calibrado para um fluxo antigo pode gerar análises incorretas quando o bot é atualizado.
 :::
+
+Para entender por que menos KPIs produzem análises mais precisas, como o score é calculado e como escolher os indicadores certos, veja [Por que Limitar KPIs no Relatório de Performance](/dashboard/kpi-strategy).

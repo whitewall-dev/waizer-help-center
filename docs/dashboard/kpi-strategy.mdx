@@ -1,0 +1,146 @@
+---
+id: kpi-strategy
+title: Por que Limitar KPIs no Relatório de Performance
+sidebar_label: Estratégia de KPIs
+sidebar_position: 4
+description: Como o score é realmente calculado, por que menos KPIs produzem análises mais precisas, e como escolher os indicadores que importam para o seu negócio.
+---
+
+# Por que Limitar KPIs no Relatório de Performance
+
+---
+
+## Como o score geral é calculado — e o que os KPIs têm a ver com isso
+
+Antes de discutir limites, é importante desfazer uma confusão comum: **o score de desempenho do Waizer não é calculado a partir dos KPIs personalizados que você define**.
+
+O score é a **média aritmética das notas de qualidade atribuídas a cada conversa** durante a análise por IA. Cada conversa recebe uma nota de 0 a 10 baseada em critérios fixos:
+
+- O bot entendeu a intenção do usuário?
+- As respostas foram objetivas e claras?
+- O conteúdo foi alinhado ao que foi pedido?
+- A linguagem e o tom foram adequados?
+- Se houve atendimento humano, a experiência foi boa?
+
+Esses critérios são **os mesmos para todos os projetos**, independentemente do que está configurado no Perfil do Agente. A análise por thread que gera o score roda antes — e separadamente — de qualquer contexto de KPIs.
+
+O que os KPIs personalizados afetam é o **enquadramento narrativo** do relatório gerado e as **respostas do assistente Ask Waizer**, não o número exibido no card de desempenho.
+
+---
+
+## O que compõe o score vs o que o complementa
+
+| Componente | Aparece no dashboard | Compõe o score | Relacionado a KPIs personalizados |
+|---|:---:|:---:|:---:|
+| Score de desempenho | ✅ | — | ❌ |
+| Taxa de resolução | ✅ | ❌ | ❌ |
+| Taxa de handoff | ✅ | ❌ | ❌ |
+| Sentimento do usuário | ✅ | ❌ | ❌ |
+| Erros críticos | ✅ | ❌ | ❌ |
+| Tópicos mais discutidos | ✅ | ❌ | ❌ |
+| Narrativa do relatório | ❌ (apenas no relatório) | ❌ | ✅ |
+| Respostas do Ask Waizer | ❌ | ❌ | ✅ |
+
+Todas as métricas do dashboard são calculadas de forma independente — nenhuma delas é entrada para o score, e nenhuma delas depende dos KPIs que você configurou. Elas aparecem para qualquer projeto, com ou sem KPIs definidos.
+
+---
+
+## Por que existe um limite de 5 KPIs
+
+O limite de 5 KPIs por projeto é uma restrição de design. A razão técnica está em como modelos de linguagem processam contexto:
+
+Quando o Waizer gera um relatório, injeta os KPIs definidos no prompt junto com dados de performance, histórico de sentimento, erros identificados e o perfil da empresa. O modelo de linguagem processa tudo isso de uma vez e precisa gerar análise coerente e acionável a partir do conjunto.
+
+**Com muitos KPIs, dois problemas surgem:**
+
+**1. Diluição de atenção.** O modelo distribui sua capacidade analítica entre todos os critérios fornecidos. Cinco KPIs vagos produzem cinco análises superficiais. Dois KPIs específicos produzem dois diagnósticos aprofundados.
+
+**2. Conflito de prioridades.** KPIs que se sobrepõem ou contradizem criam ambiguidade. O modelo não sabe qual critério priorizar quando há tensão entre eles — e tende a produzir análises genéricas para não errar.
+
+O limite de 5 é o teto. O ponto ideal para a maioria dos projetos é **2 a 3 KPIs bem definidos**.
+
+---
+
+## Diferença entre KPIs de negócio e métricas operacionais
+
+O Waizer trabalha com dois tipos distintos de indicadores — e a confusão entre eles é a origem de muitas configurações mal aproveitadas.
+
+**Métricas operacionais** são calculadas automaticamente pelo Waizer a partir das conversas. Você não as define — você as lê:
+
+- Taxa de resolução (% de conversas onde o usuário teve o objetivo atendido)
+- Taxa de handoff (% de conversas transferidas para humano)
+- Score de desempenho (qualidade média de execução do bot)
+- Sentimento inicial e final
+- Erros críticos e tópicos mais frequentes
+
+**KPIs de negócio** são os indicadores que definem sucesso *no contexto específico da sua operação* — aquilo que as métricas operacionais, por si só, não conseguem responder:
+
+- "O bot conseguiu reverter a inadimplência com proposta de parcelamento?"
+- "O usuário completou o cadastro sem abandonar o fluxo?"
+- "A reclamação foi encaminhada com protocolo gerado na mesma conversa?"
+
+As métricas operacionais medem *como* o bot está se saindo. Os KPIs de negócio medem *se o bot está cumprindo o objetivo para o qual foi criado*.
+
+Você não precisa criar um KPI para acompanhar handoff ou resolução — isso já está no dashboard. Os KPIs que você define devem ser aqueles que o dashboard não consegue calcular automaticamente porque dependem do contexto do seu negócio.
+
+---
+
+## Como métricas extras aparecem no dashboard sem compor o score
+
+Todas as métricas do dashboard estão sempre disponíveis, independentemente dos KPIs configurados. Você não precisa criar um KPI para que handoff rate, sentimento ou tópicos apareçam — eles são calculados automaticamente para qualquer projeto.
+
+Se há uma dimensão que você quer acompanhar mas que já existe como métrica automática, **não crie um KPI para ela** — isso não adiciona nada à análise e ocupa um dos 5 slots disponíveis. Reserve os KPIs para o que o dashboard não calcula.
+
+Exemplos de métricas que **não precisam ser KPIs** porque já estão no dashboard:
+- "Taxa de transferência para humano" → já é a taxa de handoff
+- "Qualidade do atendimento" → já é o score de desempenho
+- "Satisfação do usuário" → já é o sentimento final
+- "Erros no fluxo" → já é a seção de erros críticos
+
+---
+
+## Como escolher os KPIs mais importantes
+
+### Parta do objetivo do chatbot, não das métricas disponíveis
+
+A pergunta certa não é "que métricas o Waizer consegue medir?". É: **"O que precisa acontecer nessas conversas para que esse chatbot seja considerado um sucesso para o negócio?"**
+
+Identifique a resposta para essa pergunta e traduza em 2 a 3 critérios observáveis nas conversas.
+
+### Critérios para selecionar um KPI
+
+Um KPI vale a pena ser configurado se:
+
+- ✅ **É específico do seu negócio** — não seria avaliado da mesma forma em qualquer outro chatbot
+- ✅ **É observável nas conversas** — a IA consegue identificar se aconteceu ou não a partir do texto
+- ✅ **Não está coberto por uma métrica automática** — não é apenas um sinônimo de handoff, resolução ou erro
+- ✅ **Gera uma ação diferente dependendo do resultado** — se positivo ou negativo não muda o que você faria, o KPI não tem utilidade prática
+
+### Priorize os KPIs que revelam problemas invisíveis
+
+O dashboard já captura problemas visíveis (erros técnicos, handoffs altos, sentimento negativo). Os melhores KPIs personalizados capturam problemas que as métricas automáticas não detectam:
+
+- O bot está apresentando a oferta no momento certo do fluxo?
+- O usuário está chegando à etapa de confirmação ou desistindo antes?
+- A objeção mais comum está sendo tratada ou ignorada?
+- O fluxo de exceção (quando o bot não sabe responder) está sendo bem conduzido?
+
+### Limite prático: comece com 2
+
+Na primeira configuração, defina no máximo 2 KPIs — os que representam os objetivos principais do chatbot. Avalie os primeiros relatórios. Se os insights estiverem genéricos ou não estiverem refletindo o que você esperava, refine as descrições antes de adicionar mais KPIs.
+
+Adicionar KPIs sem revisar os existentes é o caminho mais rápido para análises superficiais.
+
+---
+
+## O que fazer com indicadores que você quer acompanhar mas não são KPIs
+
+Nem tudo precisa entrar como KPI. Para indicadores que você quer monitorar mas que não se encaixam nos critérios acima, use o assistente **Ask Waizer** diretamente:
+
+- "Em quantas conversas do último mês o usuário perguntou sobre prazo de entrega mais de uma vez?"
+- "Quais tópicos têm maior taxa de handoff nos últimos 30 dias?"
+- "Mostre conversas onde o bot não conseguiu responder a pergunta do usuário."
+
+O assistente consegue responder perguntas ad hoc sobre os dados sem que você precise criar KPIs formais para cada dimensão que quiser investigar pontualmente.
+
+Reserve os KPIs para o que você precisa monitorar de forma contínua e sistemática em todos os relatórios.
