@@ -1,0 +1,147 @@
+---
+id: poc-guide
+title: "Guia Prático: Como Preparar Dados para uma POC"
+sidebar_label: Preparando Dados para POC
+sidebar_position: 4
+description: Boas práticas de anonimização, cuidados ao usar dados reais em ambiente de teste e checklist de segurança para administradores conduzindo uma prova de conceito no Waizer.
+---
+
+# Guia Prático: Como Preparar Dados para uma POC
+
+Uma prova de conceito (POC) com dados reais do seu chatbot é a forma mais eficaz de avaliar o Waizer — mas também é o momento em que dados sensíveis têm maior risco de exposição desnecessária. Este guia cobre o que fazer antes, durante e depois da POC para proteger os dados dos seus usuários e manter a conformidade com a LGPD.
+
+:::note[Premissa importante]
+O Waizer não possui mecanismos nativos de mascaramento de dados pessoais. Todo dado importado é armazenado e enviado para análise por IA exatamente como foi recebido. A responsabilidade pela anonimização antes da importação é do cliente.
+:::
+
+---
+
+## Antes de começar: defina o escopo mínimo necessário
+
+Antes de exportar qualquer dado, responda:
+
+- **Qual período é suficiente para validar o produto?** Para uma POC, 2 a 4 semanas de conversas já são representativas na maioria dos casos. Não exporte meses de histórico se uma quinzena resolve.
+- **Quais tipos de conversa precisam estar na amostra?** Selecione fluxos representativos do que você quer analisar — não exporte tudo indiscriminadamente.
+- **Quem da sua equipe precisará acessar o projeto durante a POC?** Restrinja o acesso ao mínimo necessário.
+
+O princípio de minimização de dados — usar apenas o que é estritamente necessário para a finalidade — não é só uma exigência da LGPD (art. 6º, III). É também a forma mais prática de reduzir risco.
+
+---
+
+## Técnicas de anonimização antes da importação
+
+### O que anonimizar
+
+Antes de importar o CSV, percorra as colunas e substitua os dados abaixo:
+
+| Tipo de dado | Onde aparece | Técnica recomendada |
+|---|---|---|
+| **Número de telefone** | Campo `threadId`, conteúdo das mensagens | Substituir por identificador sequencial (`CONTATO_001`) |
+| **CPF / CNPJ** | Conteúdo das mensagens | Substituir por `[CPF OMITIDO]` ou token opaco |
+| **Nome completo** | Conteúdo das mensagens, campo `username` no Threads CSV | Substituir por `Cliente 001` ou iniciais genéricas |
+| **E-mail** | Conteúdo das mensagens | Substituir por `[EMAIL OMITIDO]` |
+| **Dados de cartão** | Conteúdo das mensagens | Substituir por `[DADOS DE PAGAMENTO OMITIDOS]` |
+| **Endereço** | Conteúdo das mensagens | Substituir pela cidade ou região apenas |
+| **Dados de saúde** | Conteúdo das mensagens | Substituir por categoria genérica (`[INFORMAÇÃO DE SAÚDE]`) |
+
+### O campo `threadId` merece atenção especial
+
+Em integrações WhatsApp via Blip, o `threadId` é o número de telefone do contato — um dado pessoal direto. Ele é armazenado em texto puro e incluído nos metadados enviados aos provedores de IA.
+
+**Antes de importar, substitua os valores de `threadId` por identificadores opacos e sequenciais:**
+
+```
+Antes:  5511999990001
+Depois: CONTATO_0001
+```
+
+Faça essa substituição de forma consistente: o mesmo número de telefone deve sempre gerar o mesmo identificador, para que as conversas do mesmo usuário continuem agrupadas corretamente.
+
+### O que você não precisa anonimizar
+
+Nem todo conteúdo das conversas é dado pessoal. Mensagens genéricas não precisam ser alteradas:
+
+- "Quero cancelar meu pedido" ✓
+- "Qual o horário de funcionamento?" ✓
+- "Meu produto chegou com defeito" ✓
+
+Foque a anonimização nos campos estruturados (`threadId`, `username`) e nas mensagens onde o usuário forneceu dados identificáveis explicitamente.
+
+### Como fazer a substituição no Excel ou Google Sheets
+
+Para anonimizar o campo `threadId` em lote:
+
+1. Crie uma coluna auxiliar com a fórmula `="CONTATO_"&TEXTO(LINHA()-1,"0000")` para gerar identificadores sequenciais.
+2. Use **Localizar e substituir** (`Ctrl+H`) para trocar ocorrências de CPF, e-mail e telefone no conteúdo das mensagens por tokens como `[CPF OMITIDO]`.
+3. Para substituições baseadas em padrão (ex: qualquer sequência de 11 dígitos), use macros do Google Sheets ou um script Python simples antes de gerar o CSV final.
+
+:::tip[Valide após anonimizar]
+Antes de importar, faça uma busca rápida no arquivo por termos como `@`, `.com`, `CPF`, dígitos com 11 caracteres e palavras como "senha". Isso ajuda a identificar dados pessoais que passaram despercebidos.
+:::
+
+---
+
+## Cuidados críticos ao usar dados reais em ambiente de teste
+
+### Os dados chegam a provedores de IA externos
+
+O conteúdo das mensagens importadas é enviado para análise por provedores de inteligência artificial (OpenAI e Anthropic). Mesmo que esses provedores não usem os dados para treinamento de modelos, eles são subprocessadores que recebem e processam os dados. Isso precisa estar previsto nas políticas de privacidade e nas bases legais da sua operação antes de uma POC com dados reais.
+
+Se não for possível garantir essa base legal no prazo da POC, use dados sintéticos ou anonimizados ao ponto de não mais se referirem a pessoas identificáveis.
+
+### Não use tokens de produção do Blip para a POC
+
+Se a sua POC usará a integração Blip, evite usar o token de acesso do ambiente de produção. Prefira:
+
+- Um chatbot de homologação com dados sintéticos, ou
+- Uma exportação CSV do histórico de produção, devidamente anonimizada.
+
+Usar tokens de produção durante uma avaliação expõe credenciais reais em um contexto de teste, onde o controle de acesso pode ser mais permissivo.
+
+### Limite o acesso ao projeto durante a POC
+
+Convide para o projeto Waizer apenas as pessoas que precisam participar ativamente da avaliação. Não compartilhe o projeto com toda a equipe "para ver como funciona" — durante a POC, os controles de acesso costumam ser menos rígidos do que em produção.
+
+### Use uma janela de tempo restrita
+
+Prefira exportar um período curto e representativo (2–4 semanas) em vez de exportar todo o histórico disponível. Isso reduz o volume de dados pessoais expostos e acelera o processamento, sem comprometer a qualidade da avaliação.
+
+### Dados de grupos sensíveis exigem atenção redobrada
+
+Não inclua na amostra da POC conversas que contenham:
+
+- Dados de menores de 18 anos
+- Dados de saúde, laudos ou diagnósticos
+- Dados de origem racial, religiosa ou política
+- Dados financeiros detalhados (extratos, saldos)
+
+Se o seu chatbot lida habitualmente com esses dados, avalie com o seu DPO se é possível excluir esses fluxos da amostra ou se será necessário um processo formal de avaliação de impacto (DPIA) antes de prosseguir.
+
+---
+
+## Checklist de segurança para o administrador
+
+Use esta lista antes de iniciar, durante e ao encerrar a POC.
+
+### Antes da importação
+
+- [ ] Definiu o período mínimo necessário para a amostra (recomendado: 2–4 semanas)
+- [ ] Substituiu todos os `threadId` por identificadores opacos e sequenciais
+- [ ] Removeu ou substituiu CPF, telefone, e-mail e dados de cartão do conteúdo das mensagens
+- [ ] Excluiu conversas que contenham dados de menores ou dados de saúde
+- [ ] Verificou o arquivo com busca por `@`, `.com`, sequências numéricas longas e palavras como "CPF", "senha", "cartão"
+- [ ] Confirmou que a base legal para uso dos dados nessa finalidade está documentada (ou optou por dados sintéticos)
+
+### Durante a POC
+
+- [ ] O projeto Waizer da POC tem acesso restrito apenas aos participantes necessários
+- [ ] Não foram usados tokens ou credenciais de produção para a integração Blip
+- [ ] Nenhuma chave de API gerada para a POC tem escopo além do necessário
+
+### Após encerrar a POC
+
+- [ ] Removeu os membros convidados apenas para a avaliação
+- [ ] Excluiu o projeto Waizer criado para a POC
+- [ ] Abriu chamado no suporte do Waizer solicitando a remoção completa dos dados do banco analítico (veja [Retenção e Exclusão de Dados](/security/data-retention))
+- [ ] Revogou chaves de API criadas para a POC em **Configurações da organização → Chaves de API**
+- [ ] Documentou internamente quais dados foram usados, por quem e por qual período

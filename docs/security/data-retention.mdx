@@ -1,0 +1,102 @@
+---
+id: data-retention
+title: Retenção e Exclusão de Dados
+sidebar_label: Retenção e Exclusão de Dados
+sidebar_position: 3
+description: Por quanto tempo o Waizer armazena mensagens, como funciona a política de retenção e como solicitar a exclusão total ou parcial de dados.
+---
+
+# Retenção e Exclusão de Dados
+
+---
+
+## O Waizer armazena as mensagens?
+
+Sim. Ao ingerir conversas — seja via Blip, CSV ou API — o Waizer armazena o conteúdo das mensagens e os metadados associados (identificador da thread, timestamps, direção, agente) em seus bancos de dados.
+
+Esses dados são a base das análises de IA: sem eles, o dashboard, as métricas e os insights não podem ser gerados ou consultados retrospectivamente.
+
+---
+
+## Por quanto tempo os dados são retidos?
+
+**Os dados são retidos indefinidamente enquanto o projeto existir.** O Waizer não aplica políticas automáticas de expiração, TTL ou exclusão programada.
+
+| O que é retido | Por quanto tempo |
+|---|---|
+| Mensagens das conversas | Indefinidamente |
+| Análises de IA por thread | Indefinidamente |
+| Metadados de usuários (threadId, username) | Indefinidamente |
+| Resultados agregados do dashboard | Indefinidamente |
+
+---
+
+## A política de retenção é configurável por cliente?
+
+Não. O Waizer não oferece, no momento, configuração de período de retenção por cliente ou por projeto. Todos os clientes operam sob a mesma política padrão de retenção indefinida.
+
+Se a sua organização possui requisitos contratuais ou regulatórios de retenção específicos (ex: exclusão após 2 anos), entre em contato com o time do Waizer para avaliar alternativas.
+
+---
+
+## Como solicitar exclusão de dados
+
+O Waizer não possui interface self-service para exclusão de dados. Todas as solicitações de exclusão devem ser feitas via suporte.
+
+### Exclusão total (projeto inteiro)
+
+A exclusão total remove todas as conversas, análises e metadados associados a um projeto.
+
+**Passo a passo:**
+
+1. Acesse **Configurações do projeto → Zona de perigo**.
+2. Clique em **Excluir projeto** e confirme a operação.
+3. Após a exclusão, abra um chamado no suporte do Waizer informando o nome e ID do projeto excluído, solicitando a limpeza completa dos dados.
+
+:::warning[A exclusão de projeto é irreversível]
+Ao excluir um projeto, todos os dados de configuração e metadados são removidos imediatamente. No entanto, a remoção completa dos dados de conversas de todos os sistemas de armazenamento requer confirmação via suporte — não assuma que a exclusão na interface é suficiente para fins de conformidade regulatória.
+:::
+
+### Exclusão parcial (dados de um usuário específico)
+
+A exclusão parcial remove as conversas de um único usuário identificado pelo seu `threadId` — o caso típico de exercício do direito de exclusão previsto no art. 18 da LGPD.
+
+**Passo a passo:**
+
+1. Identifique o `threadId` do usuário cujos dados devem ser excluídos. Em integrações WhatsApp via Blip, esse valor é o número de telefone do contato; em integrações CSV ou API, é o valor que você definiu no campo `threadId`.
+2. Abra um chamado no suporte do Waizer com as seguintes informações:
+   - **ID do projeto** (disponível em Configurações do projeto)
+   - **threadId** do usuário a ser excluído
+   - **Motivo da solicitação** (ex: exercício de direito LGPD, solicitação do titular)
+3. O time do Waizer executará a exclusão manual e confirmará a conclusão por e-mail.
+
+:::note[Prazo de atendimento]
+Solicitações de exclusão por direito do titular (LGPD art. 18) são atendidas em até 15 dias úteis. Para outras solicitações, o prazo pode variar conforme volume e complexidade.
+:::
+
+---
+
+## O que acontece com os dados após a exclusão
+
+A exclusão de dados no Waizer envolve múltiplas camadas de armazenamento. A remoção completa em todas elas requer a etapa de confirmação via suporte descrita acima.
+
+| Camada | O que armazena | Excluído ao deletar o projeto? | Requer suporte? |
+|---|---|---|---|
+| Banco de aplicação | Configurações, threads, metadados | Sim, automaticamente | Não |
+| Banco analítico | Mensagens brutas, análises de IA | Não automaticamente | **Sim** |
+
+---
+
+## Perguntas frequentes
+
+**Posso recuperar dados após excluir um projeto?**
+Não. A exclusão é permanente e irreversível. Não há backups acessíveis ao cliente nem mecanismo de restauração.
+
+**A exclusão de um membro da organização apaga os dados que ele importou?**
+Não. Remover um usuário da organização não afeta os projetos nem os dados existentes. Os dados permanecem associados ao projeto, não ao usuário que os importou.
+
+**O Waizer tem um canal específico para solicitações de direitos de titulares (LGPD)?**
+Sim. Envie sua solicitação para o suporte do Waizer identificando-a como "Exercício de direito de titular — LGPD". O time de privacidade será acionado para processar a solicitação dentro do prazo legal.
+
+**Se eu não renovar meu plano, os dados são excluídos?**
+Não automaticamente. Quando um plano expira, as integrações são congeladas — novas importações são bloqueadas, mas os dados existentes permanecem armazenados. Para excluí-los, é necessário abrir uma solicitação via suporte.

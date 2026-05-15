@@ -37,6 +37,8 @@ const sidebars = {
       items: [
         'security/index',
         'security/data-privacy',
+        'security/data-retention',
+        'security/poc-guide',
       ],
     },
   ],
