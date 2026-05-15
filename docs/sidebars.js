@@ -29,7 +29,15 @@ const sidebars = {
       ],
     },
     'conversations/index',
-    'ai-agent/index',
+    {
+      type: 'category',
+      label: 'Assistente de IA',
+      collapsed: false,
+      items: [
+        'ai-agent/index',
+        'ai-agent/ask-waizer',
+      ],
+    },
     {
       type: 'category',
       label: 'Organizações e Projetos',

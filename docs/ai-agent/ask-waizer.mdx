@@ -1,0 +1,130 @@
+---
+id: ask-waizer
+title: Ask Waizer — O Assistente de IA
+sidebar_label: Ask Waizer
+sidebar_position: 2
+description: Como usar o Ask Waizer para explorar os dados do seu projeto em linguagem natural, gerenciar sessões, compartilhar análises e tirar o máximo do assistente.
+---
+
+# Ask Waizer — O Assistente de IA
+
+O **Ask Waizer** é o assistente de IA do Waizer. Ele responde perguntas sobre os dados do seu projeto em linguagem natural — sem SQL, sem filtros manuais, sem exportações. Você pergunta; ele consulta os dados e responde com contexto.
+
+---
+
+## Duas formas de acessar
+
+### Botão flutuante
+
+Um botão fixo no canto inferior direito aparece em todas as telas do projeto, exceto na página do Ask Waizer e nas sessões de chat abertas. Clique nele para abrir o painel lateral do assistente.
+
+O painel lateral é ideal para consultas rápidas enquanto você navega no dashboard ou no navegador de conversas. Ele mantém o contexto da sessão aberta mesmo que você mude de tela.
+
+### Página dedicada
+
+Acesse o Ask Waizer pela navegação lateral do projeto para abrir a experiência completa.
+
+A página dedicada oferece recursos exclusivos que o painel flutuante não tem:
+
+- **Histórico de sessões** — todas as suas conversas anteriores ficam listadas na barra lateral, com busca por título.
+- **Sugestões de perguntas** — ao abrir uma sessão nova, o assistente apresenta perguntas sugeridas baseadas no contexto do seu projeto para ajudar você a começar.
+- **Interface em tela cheia** — mais espaço para ler respostas longas e análises detalhadas.
+
+---
+
+## Sessões de conversa
+
+Cada troca com o Ask Waizer acontece dentro de uma **sessão**. Uma sessão é criada automaticamente quando você envia a primeira mensagem — o título da sessão é gerado a partir da pergunta inicial.
+
+Sessões são persistentes: você pode fechar o painel, navegar para outra tela e retornar à mesma conversa mais tarde sem perder o histórico.
+
+### Gerenciando sessões
+
+No histórico da página dedicada você pode:
+- **Renomear** uma sessão para encontrá-la mais facilmente depois.
+- **Excluir** sessões que não são mais relevantes.
+- **Buscar** pelo título de sessões anteriores.
+
+---
+
+## Compartilhando uma análise
+
+Qualquer sessão pode ser **compartilhada** com outros membros do projeto. Para compartilhar, abra a sessão e copie o link gerado.
+
+**Como funciona o acesso compartilhado:**
+
+| Acesso | Pode ler | Pode continuar | Pode editar/excluir |
+|---|:---:|:---:|:---:|
+| Dono da sessão | ✅ | ✅ | ✅ |
+| Outros membros do projeto | ✅ | ❌ | ❌ |
+
+Membros que recebem o link veem o histórico completo da conversa, mas não podem enviar novas mensagens nem alterar a sessão. Use o compartilhamento para documentar descobertas ou repassar análises para o time sem precisar refazer o processo.
+
+---
+
+## O que o Ask Waizer pode responder
+
+O assistente tem acesso aos dados analíticos do seu projeto: métricas agregadas, análises de threads, tópicos identificados, sentimento, erros críticos e resultados do último relatório. O perfil do agente configurado no projeto — incluindo os KPIs definidos — é usado como referência para contextualizar as respostas.
+
+**Exemplos de perguntas:**
+
+**Métricas e tendências:**
+- *"Como está a taxa de resolução nos últimos 30 dias comparada ao mês anterior?"*
+- *"Qual o sentimento médio dos usuários esta semana?"*
+- *"O score de desempenho melhorou depois da última atualização do fluxo?"*
+
+**Erros e problemas:**
+- *"Quais são os erros que mais afetam conversas nos últimos 7 dias?"*
+- *"Em quais tipos de conversa o transbordo é mais frequente?"*
+- *"Há algum padrão nas conversas com sentimento negativo?"*
+
+**Tópicos e usuários:**
+- *"O que os usuários mais perguntam que o bot não consegue responder?"*
+- *"Quais tópicos têm maior taxa de transbordo?"*
+- *"Mostre conversas onde o usuário repetiu a mesma pergunta mais de uma vez."*
+
+**Recomendações:**
+- *"O que eu deveria priorizar para melhorar o bot agora?"*
+- *"Existe alguma oportunidade clara de automação com base nas conversas recentes?"*
+
+:::tip[Use os KPIs para guiar o assistente]
+Se você configurou KPIs no Perfil do Agente, o Ask Waizer os usa como referência ao interpretar perguntas sobre desempenho. Perguntas alinhadas aos seus KPIs tendem a gerar respostas mais relevantes e acionáveis.
+:::
+
+---
+
+## Contexto de período
+
+O Ask Waizer usa o **filtro de período ativo no dashboard** como contexto temporal das respostas.
+
+- Se você abrir o assistente pelo **botão flutuante** enquanto estiver no dashboard com os últimos 7 dias selecionados, as respostas usarão esse intervalo.
+- Se você acessar diretamente pela **página dedicada**, sem passar pelo dashboard, o assistente não recebe um período pré-definido. Nesse caso, especifique o período diretamente na pergunta: *"nos últimos 30 dias"*, *"em março"*, *"desde o início do projeto"*.
+
+Para garantir consistência, prefira ajustar o filtro de período no dashboard antes de abrir o assistente em novas análises.
+
+---
+
+## Integração com o Blip
+
+Se o seu projeto está conectado ao Blip e você tem acesso autenticado, o Ask Waizer pode consultar informações adicionais diretamente da plataforma Blip — como dados de contatos, tickets e visão geral do chatbot — além dos dados analíticos do Waizer.
+
+---
+
+## Limitações
+
+- O assistente **não executa ações** — ele lê e analisa dados, mas não altera configurações, não dispara importações e não modifica fluxos.
+- Conversas ingeridas recentemente podem não estar disponíveis ainda. O processamento é assíncrono; consulte o [guia de processamento](/getting-started/processing) para entender os ciclos.
+- Sessões compartilhadas ficam visíveis para todos os membros do projeto — evite compartilhar sessões que contenham análises sensíveis com pessoas fora do escopo necessário.
+- O assistente trabalha com os dados analíticos do projeto. Para explorar o conteúdo individual de uma conversa específica, use o [Navegador de Conversas](/conversations) em conjunto.
+
+---
+
+## Dicas para melhores resultados
+
+**Especifique o período na pergunta** quando não tiver certeza de qual filtro está ativo no dashboard.
+
+**Faça perguntas de acompanhamento** — o assistente mantém o contexto da sessão. Se a resposta foi incompleta, peça mais detalhes: *"quais conversas representam esse padrão?"*, *"pode detalhar os erros mais críticos?"*.
+
+**Nomeie as sessões** que gerarem insights importantes. Isso facilita encontrá-las no histórico e compartilhá-las com o time de forma organizada.
+
+**Combine Ask Waizer com o dashboard** — use as métricas visuais para identificar anomalias e o assistente para entender o contexto por trás dos números.
