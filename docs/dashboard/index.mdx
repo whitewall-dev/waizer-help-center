@@ -20,7 +20,7 @@ O dashboard é dividido em blocos:
 ┌─────────────────────────────────────────────────────────┐
 │  Filtro de período                                        │
 ├──────────┬──────────┬──────────┬──────────┬─────────────┤
-│ Threads  │  Erros   │ Resolução│  Handoff │ Performance  │
+│ Threads  │  Erros   │ Resolução│  Transbordo │ Performance  │
 │  (total) │  (taxa)  │  (taxa)  │  (taxa)  │  (score)    │
 ├──────────┴──────────┴──────────┴──────────┴─────────────┤
 │  Gráfico de sentimento ao longo do tempo                 │
@@ -89,15 +89,15 @@ A resolução é determinada por análise de IA: o modelo avalia o contexto comp
 
 ---
 
-### Taxa de handoff
+### Taxa de transbordo
 
 Percentual de conversas que foram transferidas para um atendente humano.
 
-**Importante:** Nem todo handoff é negativo. Em alguns fluxos, a transferência para humano é o objetivo esperado (ex: vendas consultivas). Interprete essa métrica no contexto do seu fluxo.
+**Importante:** Nem todo transbordo é negativo. Em alguns fluxos, a transferência para humano é o objetivo esperado (ex: vendas consultivas). Interprete essa métrica no contexto do seu fluxo.
 
 **Sinais de alerta:**
-- Handoff muito alto em fluxos que deveriam ser 100% automatizados.
-- Handoff concentrado em determinados horários ou tópicos.
+- Taxa de transbordo muito alta em fluxos que deveriam ser 100% automatizados.
+- Transbordo concentrado em determinados horários ou tópicos — investigue os tópicos associados.
 
 ---
 
@@ -113,7 +113,7 @@ Um score composto de 0 a 100 que combina as principais métricas do chatbot em u
 | 40 – 59 | Regular |
 | Abaixo de 40 | Crítico |
 
-O score leva em conta resolução, erros e handoff de forma ponderada. Use-o para ter uma visão rápida da saúde geral do bot.
+O score leva em conta resolução, erros e transbordo de forma ponderada. Use-o para ter uma visão rápida da saúde geral do bot.
 
 ---
 

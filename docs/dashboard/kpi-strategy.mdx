@@ -34,7 +34,7 @@ O que os KPIs personalizados afetam é o **enquadramento narrativo** do relatór
 |---|:---:|:---:|:---:|
 | Score de desempenho | ✅ | — | ❌ |
 | Taxa de resolução | ✅ | ❌ | ❌ |
-| Taxa de handoff | ✅ | ❌ | ❌ |
+| Taxa de transbordo | ✅ | ❌ | ❌ |
 | Sentimento do usuário | ✅ | ❌ | ❌ |
 | Erros críticos | ✅ | ❌ | ❌ |
 | Tópicos mais discutidos | ✅ | ❌ | ❌ |
@@ -68,7 +68,7 @@ O Waizer trabalha com dois tipos distintos de indicadores — e a confusão entr
 **Métricas operacionais** são calculadas automaticamente pelo Waizer a partir das conversas. Você não as define — você as lê:
 
 - Taxa de resolução (% de conversas onde o usuário teve o objetivo atendido)
-- Taxa de handoff (% de conversas transferidas para humano)
+- Taxa de transbordo (% de conversas transferidas para humano)
 - Score de desempenho (qualidade média de execução do bot)
 - Sentimento inicial e final
 - Erros críticos e tópicos mais frequentes
@@ -81,18 +81,18 @@ O Waizer trabalha com dois tipos distintos de indicadores — e a confusão entr
 
 As métricas operacionais medem *como* o bot está se saindo. Os KPIs de negócio medem *se o bot está cumprindo o objetivo para o qual foi criado*.
 
-Você não precisa criar um KPI para acompanhar handoff ou resolução — isso já está no dashboard. Os KPIs que você define devem ser aqueles que o dashboard não consegue calcular automaticamente porque dependem do contexto do seu negócio.
+Você não precisa criar um KPI para acompanhar transbordo ou resolução — isso já está no dashboard. Os KPIs que você define devem ser aqueles que o dashboard não consegue calcular automaticamente porque dependem do contexto do seu negócio.
 
 ---
 
 ## Como métricas extras aparecem no dashboard sem compor o score
 
-Todas as métricas do dashboard estão sempre disponíveis, independentemente dos KPIs configurados. Você não precisa criar um KPI para que handoff rate, sentimento ou tópicos apareçam — eles são calculados automaticamente para qualquer projeto.
+Todas as métricas do dashboard estão sempre disponíveis, independentemente dos KPIs configurados. Você não precisa criar um KPI para que a taxa de transbordo, sentimento ou tópicos apareçam — eles são calculados automaticamente para qualquer projeto.
 
 Se há uma dimensão que você quer acompanhar mas que já existe como métrica automática, **não crie um KPI para ela** — isso não adiciona nada à análise e ocupa um dos 5 slots disponíveis. Reserve os KPIs para o que o dashboard não calcula.
 
 Exemplos de métricas que **não precisam ser KPIs** porque já estão no dashboard:
-- "Taxa de transferência para humano" → já é a taxa de handoff
+- "Taxa de transferência para humano" → já é a taxa de transbordo
 - "Qualidade do atendimento" → já é o score de desempenho
 - "Satisfação do usuário" → já é o sentimento final
 - "Erros no fluxo" → já é a seção de erros críticos
@@ -113,12 +113,12 @@ Um KPI vale a pena ser configurado se:
 
 - ✅ **É específico do seu negócio** — não seria avaliado da mesma forma em qualquer outro chatbot
 - ✅ **É observável nas conversas** — a IA consegue identificar se aconteceu ou não a partir do texto
-- ✅ **Não está coberto por uma métrica automática** — não é apenas um sinônimo de handoff, resolução ou erro
+- ✅ **Não está coberto por uma métrica automática** — não é apenas um sinônimo de transbordo, resolução ou erro
 - ✅ **Gera uma ação diferente dependendo do resultado** — se positivo ou negativo não muda o que você faria, o KPI não tem utilidade prática
 
 ### Priorize os KPIs que revelam problemas invisíveis
 
-O dashboard já captura problemas visíveis (erros técnicos, handoffs altos, sentimento negativo). Os melhores KPIs personalizados capturam problemas que as métricas automáticas não detectam:
+O dashboard já captura problemas visíveis (erros técnicos, taxa de transbordo alta, sentimento negativo). Os melhores KPIs personalizados capturam problemas que as métricas automáticas não detectam:
 
 - O bot está apresentando a oferta no momento certo do fluxo?
 - O usuário está chegando à etapa de confirmação ou desistindo antes?
@@ -138,7 +138,7 @@ Adicionar KPIs sem revisar os existentes é o caminho mais rápido para análise
 Nem tudo precisa entrar como KPI. Para indicadores que você quer monitorar mas que não se encaixam nos critérios acima, use o assistente **Ask Waizer** diretamente:
 
 - "Em quantas conversas do último mês o usuário perguntou sobre prazo de entrega mais de uma vez?"
-- "Quais tópicos têm maior taxa de handoff nos últimos 30 dias?"
+- "Quais tópicos têm maior taxa de transbordo nos últimos 30 dias?"
 - "Mostre conversas onde o bot não conseguiu responder a pergunta do usuário."
 
 O assistente consegue responder perguntas ad hoc sobre os dados sem que você precise criar KPIs formais para cada dimensão que quiser investigar pontualmente.

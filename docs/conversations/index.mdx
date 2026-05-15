@@ -27,7 +27,7 @@ A lista exibe as conversas do período filtrado no dashboard, com um resumo de c
 | **ID da conversa** | Identificador externo da conversa na plataforma de origem |
 | **Data** | Quando a conversa ocorreu |
 | **Sentimento** | Indicador visual do sentimento predominante |
-| **Status** | Resolvida, com erro, ou com handoff |
+| **Status** | Resolvida, com erro, ou com transbordo |
 
 Você pode filtrar e ordenar a lista por status, sentimento ou data para encontrar os casos mais relevantes.
 
@@ -47,7 +47,7 @@ O Waizer pode exibir indicadores em mensagens específicas:
 | Indicador | Significado |
 |---|---|
 | 🔴 Erro | A plataforma registrou um erro nessa mensagem |
-| 👤 Handoff | O atendimento foi transferido para um humano a partir daqui |
+| 👤 Transbordo | O atendimento foi transferido para um humano a partir daqui |
 | 😟 Sentimento negativo | A IA detectou frustração ou insatisfação nessa mensagem |
 
 ---
@@ -59,7 +59,7 @@ Acima do thread, você verá um resumo com os metadados da conversa:
 - **Duração** — tempo total da conversa
 - **Total de mensagens** — volume de trocas
 - **Agente responsável** — qual fluxo ou sub-agente tratou a conversa
-- **Resultado** — resolução, erro ou handoff
+- **Resultado** — resolução, erro ou transbordo
 - **Tópico identificado** — o assunto principal da conversa, detectado por IA
 
 ---
@@ -81,7 +81,7 @@ Para conversas vindas do Blip, um botão **Abrir no Blip** aparece no cabeçalho
 
 ### Entender abandono ou baixa resolução
 
-1. Filtre conversas com status **não resolvida** e **sem handoff**.
+1. Filtre conversas com status **não resolvida** e **sem transbordo**.
 2. Leia as conversas próximas ao ponto de abandono.
 3. Identifique se o bot falhou em entender o usuário, se as opções oferecidas não eram relevantes, ou se o fluxo ficou preso em loop.
 

@@ -28,12 +28,12 @@ Para ser incluída na análise por IA, uma conversa precisa ter:
 Conversas abaixo desse mínimo são armazenadas e contabilizadas no total de threads, mas **não geram análise de IA** — e portanto não contribuem para as taxas de resolução, erro por IA, sentimento ou score de desempenho.
 
 :::note[Total de conversas ≠ conversas analisadas pela IA]
-O número exibido no card **Threads** inclui todas as conversas importadas no período. As taxas percentuais (resolução, handoff, erro) são calculadas sobre o subconjunto analisado pela IA — que pode ser menor que o total. Isso é esperado: conversas muito curtas não têm contexto suficiente para análise.
+O número exibido no card **Threads** inclui todas as conversas importadas no período. As taxas percentuais (resolução, transbordo, erro) são calculadas sobre o subconjunto analisado pela IA — que pode ser menor que o total. Isso é esperado: conversas muito curtas não têm contexto suficiente para análise.
 :::
 
 ---
 
-## Transbordo (Handoff)
+## Transbordo
 
 **Tipo:** Estático — depende exclusivamente de metadados estruturados.
 
@@ -59,8 +59,8 @@ Adicione o campo `humanAssigneeId` no `metadata` das mensagens enviadas pelo ate
 
 O Waizer registra o **primeiro** `humanAssigneeId` encontrado na conversa. Mensagens subsequentes do mesmo atendente reforçam o sinal, mas não alteram o registro.
 
-:::tip[Sobre a taxa de handoff]
-Nem todo handoff é negativo. Em fluxos de vendas consultivas ou suporte de segundo nível, o handoff pode ser o resultado esperado. Interprete a taxa no contexto do objetivo do seu fluxo — não como uma métrica a minimizar sempre.
+:::tip[Sobre a taxa de transbordo]
+Nem todo transbordo é negativo. Em fluxos de vendas consultivas ou suporte de segundo nível, o transbordo pode ser o resultado esperado. Interprete a taxa no contexto do objetivo do seu fluxo — não como uma métrica a minimizar sempre.
 :::
 
 ---

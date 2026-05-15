@@ -114,7 +114,7 @@ Há três propriedades disponíveis:
 
 | Propriedade | Tipo | Aplicável a | Descrição |
 |---|---|---|---|
-| `humanAssigneeId` | string | Apenas mensagens `SENT` | Identifica que a mensagem foi enviada por um atendente humano (handoff). O valor pode ser o e-mail, nome de usuário ou ID do atendente na sua plataforma. |
+| `humanAssigneeId` | string | Apenas mensagens `SENT` | Identifica que a mensagem foi enviada por um atendente humano (transbordo). O valor pode ser o e-mail, nome de usuário ou ID do atendente na sua plataforma. |
 | `subAgentId` | string | Apenas mensagens `SENT` | Identifica que a mensagem foi enviada por um sub-agente ou fluxo secundário. Útil quando há múltiplos bots ou fluxos em uma mesma conversa. |
 | `error` | string | Qualquer mensagem | Sinaliza que houve um erro de plataforma associado à mensagem. O valor deve descrever o tipo de erro. |
 
@@ -127,7 +127,7 @@ Em CSV, o JSON dentro do campo `metadata` requer atenção especial:
 
 **Exemplos:**
 
-Handoff humano:
+Transbordo humano:
 ```
 "{""humanAssigneeId"": ""ana.souza@empresa.com""}"
 ```
