@@ -1,0 +1,150 @@
+---
+id: connecting-api
+title: Integração via API
+sidebar_label: Integração via API
+sidebar_position: 3
+description: Use a API do Waizer para enviar conversas de qualquer plataforma e manter seu dashboard atualizado programaticamente.
+---
+
+# Integração via API
+
+A integração via API permite que você envie conversas de qualquer plataforma diretamente para o Waizer, sem depender de integrações nativas. É a opção ideal para chatbots customizados, plataformas proprietárias ou fluxos que exigem transformação de dados antes da análise.
+
+---
+
+## Quando usar a API
+
+Use a integração via API quando:
+
+- Seu chatbot está em uma plataforma sem integração nativa com o Waizer.
+- Você precisa de controle total sobre quais dados enviar e quando.
+- Quer transformar ou enriquecer os dados antes de enviá-los para análise.
+- Está construindo uma pipeline de dados customizada.
+
+---
+
+## Configuração
+
+### 1. Gere uma chave de API
+
+Acesse **Configurações da organização → Chaves de API** e clique em **Nova chave de API**.
+
+- Dê um nome descritivo à chave (ex: "Bot Atendimento Produção").
+- Defina as permissões necessárias.
+- Copie e guarde a chave gerada — ela só será exibida uma vez.
+
+:::danger[Segurança da chave de API]
+Nunca exponha sua chave de API em código frontend, repositórios públicos ou logs. Trate-a como uma senha. Se comprometida, revogue-a imediatamente em **Configurações → Chaves de API** e crie uma nova.
+:::
+
+### 2. Selecione API como fonte de dados
+
+No seu projeto, acesse **Configurações** e selecione **API** como tipo de integração. Você verá o **ID do projeto** necessário para as chamadas.
+
+---
+
+## Enviando conversas
+
+### Endpoint
+
+```
+POST https://api.waizer.io/v1/ingest
+```
+
+### Headers obrigatórios
+
+```http
+Authorization: Bearer {sua-chave-de-api}
+Content-Type: application/json
+```
+
+### Body da requisição
+
+O body deve seguir o **WCF (Waizer Conversation Format)**. Você pode enviar uma conversa completa ou mensagens individuais.
+
+#### Enviando uma conversa completa
+
+```json
+{
+  "projectId": "proj_abc123",
+  "thread": {
+    "externalId": "conversa-001",
+    "messages": [
+      {
+        "id": "msg-001",
+        "timestamp": "2024-01-15T10:00:00Z",
+        "content": "Olá! Como posso ajudar?",
+        "direction": "sent",
+        "agentId": "welcome-flow"
+      },
+      {
+        "id": "msg-002",
+        "timestamp": "2024-01-15T10:00:15Z",
+        "content": "Preciso cancelar meu pedido",
+        "direction": "received"
+      }
+    ]
+  }
+}
+```
+
+#### Campos do objeto `thread`
+
+| Campo | Obrigatório | Tipo | Descrição |
+|---|---|---|---|
+| `externalId` | Sim | string | ID único da conversa na sua plataforma |
+| `messages` | Sim | array | Lista de mensagens da conversa |
+
+#### Campos de cada `message`
+
+| Campo | Obrigatório | Tipo | Descrição |
+|---|---|---|---|
+| `id` | Sim | string | ID único da mensagem |
+| `timestamp` | Sim | ISO 8601 | Data e hora da mensagem |
+| `content` | Sim | string | Texto da mensagem |
+| `direction` | Sim | `sent` \| `received` | `sent` = bot; `received` = usuário |
+| `agentId` | Não | string | Identificador do agente/fluxo |
+| `humanAssigneeId` | Não | string | Nome do atendente humano (para handoff) |
+| `error` | Não | string | Descrição de erro ocorrido na mensagem |
+
+### Resposta de sucesso
+
+```json
+{
+  "status": "queued",
+  "threadId": "internal-uuid-123",
+  "message": "Thread enqueued for processing"
+}
+```
+
+---
+
+## Boas práticas
+
+### Envio em lote
+
+Para processar grandes volumes históricos, envie conversas em lote. Respeite um intervalo mínimo entre requisições para evitar rate limiting.
+
+### Idempotência
+
+O campo `externalId` garante idempotência: se você enviar a mesma conversa duas vezes com o mesmo `externalId`, o Waizer atualizará a existente em vez de criar uma duplicata.
+
+### Quando enviar
+
+Envie a conversa após ela ser **finalizada** (não durante). Conversas incompletas terão menos contexto para análise e podem gerar insights imprecisos.
+
+---
+
+## Solução de problemas
+
+**Erro 401 Unauthorized**
+Verifique se o header `Authorization` está correto e se a chave de API não foi revogada.
+
+**Erro 404 Not Found**
+Confirme que o `projectId` existe e que a chave de API tem permissão de acesso a esse projeto.
+
+**Erro 422 Unprocessable Entity**
+O body da requisição tem um problema de formato. Revise os campos obrigatórios e os tipos de dados, especialmente o formato dos timestamps.
+
+**Conversas enviadas com sucesso, mas sem análise no dashboard**
+O processamento de IA é assíncrono. Aguarde alguns minutos. Conversas com menos de 5 mensagens trocadas (entre bot e usuário) podem não gerar análise completa.

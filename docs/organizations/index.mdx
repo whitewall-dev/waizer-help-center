@@ -1,0 +1,98 @@
+---
+id: organizations
+title: Organizações e Projetos
+sidebar_label: Organizações e Projetos
+sidebar_position: 6
+description: Entenda como estruturar sua equipe, projetos e permissões no Waizer usando organizações.
+---
+
+# Organizações e Projetos
+
+O Waizer usa uma estrutura de dois níveis para organizar seu trabalho: **organizações** e **projetos**. Entender como eles se relacionam ajuda a montar o espaço de trabalho da sua equipe da forma mais eficiente.
+
+---
+
+## Estrutura hierárquica
+
+```
+Organização
+├── Membros (com papéis: Admin, Editor, Viewer)
+├── Configurações de segurança
+├── Chaves de API
+└── Projetos
+    ├── Projeto A (um chatbot/fonte de dados)
+    ├── Projeto B
+    └── Projeto C
+```
+
+---
+
+## Organizações
+
+Uma **organização** é o espaço compartilhado de uma empresa ou equipe. Ela agrupa todos os projetos e usuários sob um único contexto.
+
+### Criando uma organização
+
+Ao fazer login pela primeira vez, o Waizer solicita que você crie uma organização. Informe o nome (ex: "Empresa X", "Time de CX da Empresa Y") e clique em **Criar**.
+
+Você também pode criar organizações adicionais a qualquer momento pelo menu do seu perfil.
+
+### Gerenciando membros
+
+Acesse **Configurações da organização → Membros** para:
+
+- **Convidar pessoas** — informe o e-mail do novo membro e selecione o papel (veja [Papéis e Permissões](/organizations/roles)).
+- **Alterar papéis** — clique no papel atual de qualquer membro para promovê-lo ou rebaixá-lo.
+- **Remover membros** — clique no menu ao lado do membro e selecione **Remover da organização**.
+
+:::note[Convites por e-mail]
+O convidado receberá um e-mail com o link de acesso. Se não possuir conta no Waizer, será solicitado que crie uma antes de ingressar na organização.
+:::
+
+### Excluindo uma organização
+
+A exclusão de uma organização é **permanente e irreversível**. Todos os projetos, dados e configurações serão deletados.
+
+Apenas **administradores** podem excluir a organização. A opção está em **Configurações → Zona de perigo → Excluir organização**.
+
+---
+
+## Projetos
+
+Um **projeto** no Waizer representa uma única fonte de dados — geralmente um chatbot específico ou fluxo conversacional. Cada projeto tem seu próprio dashboard, configurações e histórico de análises.
+
+### Criando um projeto
+
+Na página inicial da sua organização, clique em **Novo projeto**. Dê um nome descritivo (ex: "Bot Atendimento", "Fluxo de Vendas") e siga o assistente de onboarding para conectar a fonte de dados.
+
+### Gerenciando projetos
+
+Administradores e editores podem:
+
+- **Renomear o projeto** — em **Configurações do projeto → Nome**.
+- **Ver e gerenciar a integração** — em **Configurações do projeto → Integração**.
+- **Acompanhar o progresso de ingestão** — em **Configurações do projeto → Progresso**.
+
+### Excluindo um projeto
+
+A exclusão de um projeto remove **todos os dados de conversas e análises** associados a ele. Esta ação é irreversível.
+
+Acesse **Configurações do projeto → Zona de perigo → Excluir projeto**. Você precisará confirmar digitando o nome do projeto.
+
+---
+
+## Múltiplas organizações
+
+Você pode ser membro de várias organizações ao mesmo tempo. Use o seletor de organização no menu lateral para alternar entre elas.
+
+Isso é útil para:
+- Consultorias que gerenciam chatbots de múltiplos clientes.
+- Times internos que atendem diferentes unidades de negócio.
+
+---
+
+## Próximos passos
+
+import DocCardList from '@theme/DocCardList';
+
+<DocCardList />

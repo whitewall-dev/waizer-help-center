@@ -1,0 +1,296 @@
+---
+id: connecting-csv
+title: Importando arquivos CSV
+sidebar_label: Importação por CSV
+sidebar_position: 2
+description: Saiba como preparar e importar arquivos CSV no formato WCF (Waizer Conversation Format) para analisar conversas históricas no Waizer.
+---
+
+# Importando arquivos CSV
+
+A importação por CSV permite carregar conversas de qualquer plataforma no Waizer — ideal para análise de dados históricos, migração de sistema ou fontes sem integração nativa.
+
+O Waizer utiliza o **WCF (Waizer Conversation Format)**, um formato padronizado em CSV que garante que os dados sejam processados corretamente pelas análises de IA.
+
+---
+
+## Quando usar a importação por CSV
+
+Use essa modalidade quando:
+
+- Você quer analisar conversas de um período específico no passado.
+- Seu chatbot está em uma plataforma sem integração direta com o Waizer.
+- Você quer combinar dados de múltiplas fontes em um único projeto.
+- Está testando o Waizer com uma amostra de dados antes de configurar uma integração contínua.
+
+---
+
+## Entendendo o WCF
+
+O **WCF (Waizer Conversation Format)** é composto por **dois arquivos CSV distintos**:
+
+| Arquivo | Finalidade | Obrigatório |
+|---|---|---|
+| **Messages CSV** | Contém todas as mensagens das conversas | Sim |
+| **Threads CSV** | Contém metadados sobre os usuários de cada conversa | Não (mas recomendado) |
+
+Os dois arquivos se relacionam pelo campo `threadId`: cada linha do Threads CSV complementa os dados de uma thread no Messages CSV.
+
+:::tip[Dica]
+Você pode começar apenas com o Messages CSV. O Threads CSV é opcional e serve para enriquecer os dados exibidos no painel, como o nome real do usuário.
+:::
+
+---
+
+## Messages CSV — o arquivo principal
+
+O Messages CSV contém uma linha por mensagem. Cada linha representa uma mensagem individual trocada em uma conversa.
+
+### Campos obrigatórios
+
+| Campo | Tipo | Valores aceitos | Descrição |
+|---|---|---|---|
+| `threadId` | string | Qualquer string única | Identificador único da conversa (thread). Geralmente é o identificador do usuário na plataforma, como um número de telefone no WhatsApp. Todas as mensagens de uma mesma conversa devem ter o mesmo `threadId`. |
+| `type` | string | MIME type | O tipo de conteúdo da mensagem no formato MIME. Use `text/plain` para mensagens de texto. Para outros formatos, veja a [tabela de tipos](#tipos-de-mensagem-mime-types) abaixo. |
+| `direction` | string | `SENT` ou `RECEIVED` | Indica quem enviou a mensagem. Use `RECEIVED` quando a mensagem foi enviada **pelo usuário**; use `SENT` quando foi enviada **pelo bot ou pelo atendente**. |
+| `content` | string | Qualquer string | O conteúdo da mensagem. Para o tipo `text/plain`, é o texto literal da mensagem. |
+| `agentId` | string | Qualquer string | Identificador do agente (bot/fluxo) responsável pelo atendimento no momento da mensagem. Mesmo que a mensagem seja do usuário (`RECEIVED`), informe o agente que estava ativo naquele momento. |
+| `timestamp` | string | ISO 8601 | Data e hora em que a mensagem foi enviada ou recebida. Deve estar no formato ISO 8601. |
+
+### Campo opcional
+
+| Campo | Tipo | Descrição |
+|---|---|---|
+| `metadata` | JSON string | Informações adicionais sobre a mensagem, codificadas como JSON dentro da célula CSV. Veja a [seção de metadata](#o-campo-metadata) abaixo. |
+
+---
+
+### Tipos de mensagem (MIME types)
+
+O campo `type` informa ao Waizer o formato original do conteúdo. Os valores mais comuns são:
+
+| Tipo | Descrição |
+|---|---|
+| `text/plain` | Mensagem de texto simples (o mais comum) |
+| `audio/ogg` | Áudio (deve ser transcrito — veja aviso abaixo) |
+| `image/jpeg` | Imagem JPEG |
+| `image/png` | Imagem PNG |
+| `video/mp4` | Vídeo MP4 |
+| `application/pdf` | Documento PDF |
+
+:::warning[Conteúdo não textual precisa de transcrição]
+O Waizer analisa **somente texto**. Se você tiver áudios, vídeos ou imagens, é necessário transcrevê-los ou descrevê-los antes de importar. Coloque a transcrição ou descrição no campo `content` e informe o MIME type original no campo `type`. Mensagens não textuais sem transcrição serão ignoradas nas análises.
+:::
+
+---
+
+### Formato do timestamp (ISO 8601)
+
+O campo `timestamp` deve estar no formato **ISO 8601**. Exemplos válidos:
+
+| Formato | Exemplo | Quando usar |
+|---|---|---|
+| UTC | `2025-03-10T09:00:00.000Z` | Quando os dados estão em UTC |
+| Com fuso horário | `2025-03-10T06:00:00.000-03:00` | Quando os dados têm fuso definido |
+| Sem milissegundos | `2025-03-10T09:00:00Z` | Também válido |
+
+:::tip[Dica sobre fuso horário]
+Se sua plataforma exporta timestamps sem fuso horário, adicione `-03:00` (horário de Brasília) ou `Z` (UTC) ao final para garantir que o Waizer interprete corretamente os horários nos gráficos.
+:::
+
+---
+
+### O campo `metadata`
+
+O campo `metadata` permite sinalizar informações especiais sobre uma mensagem. Ele deve conter um **objeto JSON válido**, formatado como string dentro da célula CSV.
+
+Há três propriedades disponíveis:
+
+| Propriedade | Tipo | Aplicável a | Descrição |
+|---|---|---|---|
+| `humanAssigneeId` | string | Apenas mensagens `SENT` | Identifica que a mensagem foi enviada por um atendente humano (handoff). O valor pode ser o e-mail, nome de usuário ou ID do atendente na sua plataforma. |
+| `subAgentId` | string | Apenas mensagens `SENT` | Identifica que a mensagem foi enviada por um sub-agente ou fluxo secundário. Útil quando há múltiplos bots ou fluxos em uma mesma conversa. |
+| `error` | string | Qualquer mensagem | Sinaliza que houve um erro de plataforma associado à mensagem. O valor deve descrever o tipo de erro. |
+
+#### Formatação do metadata em CSV
+
+Em CSV, o JSON dentro do campo `metadata` requer atenção especial:
+
+1. **Envolva o valor da célula com aspas duplas** (padrão CSV para campos com caracteres especiais).
+2. **Escape as aspas duplas internas** dobrando-as: `"` vira `""`.
+
+**Exemplos:**
+
+Handoff humano:
+```
+"{""humanAssigneeId"": ""ana.souza@empresa.com""}"
+```
+
+Sub-agente:
+```
+"{""subAgentId"": ""agente-vendas""}"
+```
+
+Erro de plataforma:
+```
+"{""error"": ""MESSAGE_NOT_DELIVERED""}"
+```
+
+Quando o campo `metadata` não se aplica, deixe a célula vazia (não escreva nada, nem `null`).
+
+---
+
+## Threads CSV — metadados dos usuários
+
+O Threads CSV é opcional e serve para associar informações sobre o usuário a cada conversa. O Waizer usa esses dados para exibir nomes e avatares no painel, tornando mais fácil identificar os usuários.
+
+### Campos do Threads CSV
+
+| Campo | Tipo | Obrigatório | Descrição |
+|---|---|---|---|
+| `threadId` | string | Sim | Identificador único da conversa. **Deve ser o mesmo valor** usado nas mensagens do Messages CSV. |
+| `username` | string | Não | Nome real do usuário. Se não informado, o Waizer exibe o `threadId` no lugar. |
+| `avatar` | string (URL) | Não | URL da foto de perfil do usuário. Deixe vazio se não disponível. |
+| `externalUrl` | string (URL) | Não | URL da conversa na plataforma de origem. Útil para acessar a conversa original diretamente pelo Waizer. |
+
+:::info
+Cada `threadId` deve aparecer **no máximo uma vez** no Threads CSV. Se um `threadId` do Messages CSV não tiver uma linha correspondente no Threads CSV, o Waizer exibirá o próprio `threadId` como identificador do usuário.
+:::
+
+---
+
+## Exemplos completos
+
+### Messages CSV de exemplo
+
+O exemplo abaixo simula três conversas de suporte: uma consulta de pedido encerrada pelo bot, um cancelamento com transferência para humano e uma reclamação redirecionada para um sub-agente.
+
+```csv
+"threadId","type","direction","content","agentId","timestamp","metadata"
+"5511999990001","text/plain","SENT","Olá! Bem-vindo ao atendimento da Loja XYZ. Como posso te ajudar hoje?","agente-principal","2025-03-10T09:00:00.000Z",
+"5511999990001","text/plain","RECEIVED","Oi! Quero saber o status do meu pedido #78432","agente-principal","2025-03-10T09:00:23.000Z",
+"5511999990001","text/plain","SENT","Claro! Vou verificar o pedido #78432 para você. Um momento.","agente-principal","2025-03-10T09:00:25.000Z",
+"5511999990001","text/plain","SENT","Seu pedido #78432 está em separação e deve ser despachado amanhã.","agente-principal","2025-03-10T09:00:30.000Z",
+"5511999990001","text/plain","RECEIVED","Entendi. E o prazo de entrega?","agente-principal","2025-03-10T09:01:02.000Z",
+"5511999990001","text/plain","SENT","A previsão é de 3 a 5 dias úteis após o despacho.","agente-principal","2025-03-10T09:01:05.000Z",
+"5511999990002","text/plain","SENT","Olá! Bem-vindo ao atendimento da Loja XYZ. Como posso te ajudar hoje?","agente-principal","2025-03-10T10:15:00.000Z",
+"5511999990002","text/plain","RECEIVED","Preciso cancelar um pedido","agente-principal","2025-03-10T10:15:44.000Z",
+"5511999990002","text/plain","SENT","Entendo. Para cancelamentos, vou te transferir para um atendente. Um momento!","agente-principal","2025-03-10T10:15:46.000Z",
+"5511999990002","text/plain","SENT","Olá! Aqui é a Ana, do time de suporte. Qual o número do pedido?","agente-principal","2025-03-10T10:18:03.000Z","{""humanAssigneeId"": ""ana.souza@lojaxyz.com""}"
+"5511999990002","text/plain","RECEIVED","É o pedido #91020","agente-principal","2025-03-10T10:18:45.000Z",
+"5511999990002","text/plain","SENT","O cancelamento do pedido #91020 foi realizado. O estorno será em até 5 dias úteis.","agente-principal","2025-03-10T10:20:11.000Z","{""humanAssigneeId"": ""ana.souza@lojaxyz.com""}"
+"5511999990003","text/plain","SENT","Olá! Como posso te ajudar?","agente-principal","2025-03-10T11:30:00.000Z",
+"5511999990003","text/plain","RECEIVED","produto com defeito","agente-principal","2025-03-10T11:30:20.000Z",
+"5511999990003","text/plain","SENT","Vou te direcionar para o setor de trocas e devoluções.","agente-troca","2025-03-10T11:30:22.000Z","{""subAgentId"": ""agente-troca""}"
+"5511999990003","text/plain","SENT","Pode me descrever o defeito?","agente-troca","2025-03-10T11:30:24.000Z","{""subAgentId"": ""agente-troca""}"
+"5511999990003","text/plain","RECEIVED","A tela veio quebrada na caixa","agente-troca","2025-03-10T11:31:05.000Z",
+"5511999990003","text/plain","SENT","Entendido. Você receberá um e-mail com as instruções de troca em até 24h.","agente-troca","2025-03-10T11:31:10.000Z","{""subAgentId"": ""agente-troca""}"
+```
+
+### Threads CSV de exemplo
+
+```csv
+"threadId","username","avatar","externalUrl"
+"5511999990001","Carla Mendes",,
+"5511999990002","Roberto Lima",,"https://suaplataforma.com/conversas/91020"
+"5511999990003","Fernanda Costa",,
+```
+
+### Download dos arquivos de exemplo
+
+- [📥 Baixar Messages CSV de exemplo](/files/waizer-messages-example.csv)
+- [📥 Baixar Threads CSV de exemplo](/files/waizer-threads-example.csv)
+
+---
+
+## Regras de formatação do CSV
+
+Siga estas regras para garantir que o arquivo seja aceito corretamente:
+
+| Regra | Detalhe |
+|---|---|
+| **Encoding** | UTF-8 (sem BOM) |
+| **Separador** | Vírgula (`,`) |
+| **Cabeçalho** | Obrigatório na primeira linha, com os nomes exatos dos campos |
+| **Aspas em campos** | Campos que contenham vírgulas, quebras de linha ou aspas devem ser envolvidos em aspas duplas (`"`) |
+| **Aspas dentro de campos** | Escape com aspas duplas: `"` → `""` |
+| **Campos vazios** | Deixe a célula vazia (não escreva `null`, `N/A` ou espaço) |
+| **Formato de arquivo** | `.csv` (não `.xlsx`, `.xls` ou `.ods`) |
+| `direction` | Sempre em maiúsculas: `SENT` ou `RECEIVED` |
+| `type` | MIME type válido (ex: `text/plain`) |
+| `timestamp` | ISO 8601 com fuso horário (ex: `2025-03-10T09:00:00.000Z`) |
+
+:::warning[Atenção: `direction` é case-sensitive]
+Os valores `sent` e `received` (minúsculas) **não são aceitos**. Use sempre `SENT` e `RECEIVED` em maiúsculas.
+:::
+
+---
+
+## Passo a passo para importar
+
+### 1. Prepare seus arquivos
+
+Monte o Messages CSV com todas as mensagens e, se desejar, o Threads CSV com os dados dos usuários. Valide os arquivos localmente antes do upload:
+
+- Abra no Excel ou Google Sheets para conferir as colunas.
+- Certifique-se de que nenhuma célula obrigatória está vazia.
+- Verifique que `direction` está em maiúsculas e `timestamp` está em ISO 8601.
+
+### 2. Acesse as configurações do projeto
+
+No seu projeto Waizer, clique em **Configurações** e selecione **CSV** como fonte de dados. Se estiver no onboarding, selecione a opção **Arquivo CSV**.
+
+### 3. Faça o upload do arquivo
+
+Clique em **Selecionar arquivo** e escolha o Messages CSV, ou arraste o arquivo para a área indicada. Repita o processo para o Threads CSV, se aplicável.
+
+O Waizer valida automaticamente o formato antes de processar. Se houver erros, você verá quais colunas ou linhas precisam de correção.
+
+### 4. Confirme e processe
+
+Após a validação bem-sucedida, clique em **Iniciar processamento**. Acompanhe o progresso em **Configurações → Progresso da importação**.
+
+O tempo de processamento varia com o volume de dados. Arquivos com até 10.000 mensagens costumam ser processados em menos de 5 minutos.
+
+---
+
+## Fazendo novas importações
+
+Você pode fazer upload de múltiplos arquivos CSV ao longo do tempo. Cada novo upload **adiciona** conversas ao projeto sem apagar as anteriores.
+
+:::note[Deduplicação automática]
+O Waizer deduplica mensagens com base na combinação de `threadId` + `timestamp` + `content`. Se você reimportar um arquivo já enviado, as mensagens duplicadas serão ignoradas automaticamente.
+:::
+
+---
+
+## Solução de problemas
+
+**Erro: "Formato de arquivo inválido"**
+Verifique se o arquivo está salvo como `.csv` (não Excel) e se todas as colunas obrigatórias estão presentes com os nomes exatos: `threadId`, `type`, `direction`, `content`, `agentId`, `timestamp`.
+
+**Erro: "Coluna 'direction' com valor inválido"**
+O campo `direction` aceita apenas `SENT` ou `RECEIVED` em maiúsculas. Valores como `sent`, `received`, `Sent`, `S`, `R` ou `1`/`0` não são válidos.
+
+**Erro: "Timestamp inválido"**
+O campo `timestamp` deve estar no formato ISO 8601 com indicação de fuso horário. Exemplos válidos: `2025-03-10T09:00:00.000Z`, `2025-03-10T06:00:00-03:00`. Formatos como `10/03/2025 09:00` ou `2025-03-10 09:00:00` não são aceitos.
+
+**Erro: "Tipo MIME inválido"**
+O campo `type` deve conter um MIME type reconhecido, como `text/plain`. Valores como `text`, `texto`, `plain` ou células vazias causam erro.
+
+**Erro: "Metadata com JSON inválido"**
+O campo `metadata` deve conter um JSON válido formatado como string CSV. Verifique se as aspas internas estão sendo escapadas com `""` e se o campo está entre aspas duplas. Use um validador de JSON para conferir o conteúdo antes de inserir na célula.
+
+**Erro: "Campo obrigatório ausente"**
+Alguma linha está com uma célula obrigatória vazia. Verifique se todas as linhas têm valores em `threadId`, `type`, `direction`, `content`, `agentId` e `timestamp`.
+
+**O arquivo foi aceito, mas o dashboard está vazio**
+O processamento de IA pode levar alguns minutos. Aguarde e recarregue o dashboard. Se após 30 minutos ainda estiver vazio, verifique:
+- O arquivo tem ao menos algumas conversas com 5 ou mais mensagens trocadas — conversas muito curtas podem não gerar insights suficientes.
+- O campo `content` não está vazio nas mensagens: o Waizer analisa texto, e mensagens sem conteúdo textual são desconsideradas.
+
+**Os usuários aparecem com o `threadId` no painel em vez do nome**
+Isso ocorre quando o Threads CSV não foi enviado ou o `threadId` no Threads CSV não corresponde exatamente ao `threadId` no Messages CSV. Certifique-se de que os valores são idênticos (incluindo maiúsculas, espaços e caracteres especiais).
+
+**Mensagens de áudio ou imagem não aparecem nas análises**
+Conteúdo não textual precisa ser transcrito antes da importação. Adicione a transcrição no campo `content` e mantenha o MIME type original no campo `type` para que o Waizer saiba o formato de origem.

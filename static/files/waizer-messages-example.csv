@@ -1,0 +1,22 @@
+"threadId","type","direction","content","agentId","timestamp","metadata"
+"5511999990001","text/plain","SENT","Olá! Bem-vindo ao atendimento da Loja XYZ. Como posso te ajudar hoje?","agente-principal","2025-03-10T09:00:00.000Z",
+"5511999990001","text/plain","RECEIVED","Oi! Quero saber o status do meu pedido #78432","agente-principal","2025-03-10T09:00:23.000Z",
+"5511999990001","text/plain","SENT","Claro! Vou verificar o pedido #78432 para você. Um momento.","agente-principal","2025-03-10T09:00:25.000Z",
+"5511999990001","text/plain","SENT","Seu pedido #78432 está em separação e deve ser despachado amanhã.","agente-principal","2025-03-10T09:00:30.000Z",
+"5511999990001","text/plain","RECEIVED","Entendi. E o prazo de entrega?","agente-principal","2025-03-10T09:01:02.000Z",
+"5511999990001","text/plain","SENT","A previsão é de 3 a 5 dias úteis após o despacho.","agente-principal","2025-03-10T09:01:05.000Z",
+"5511999990001","text/plain","RECEIVED","Ok, obrigada!","agente-principal","2025-03-10T09:01:18.000Z",
+"5511999990001","text/plain","SENT","Disponha! Se precisar de mais alguma coisa, é só chamar.","agente-principal","2025-03-10T09:01:20.000Z",
+"5511999990002","text/plain","SENT","Olá! Bem-vindo ao atendimento da Loja XYZ. Como posso te ajudar hoje?","agente-principal","2025-03-10T10:15:00.000Z",
+"5511999990002","text/plain","RECEIVED","Preciso cancelar um pedido","agente-principal","2025-03-10T10:15:44.000Z",
+"5511999990002","text/plain","SENT","Entendo. Para cancelamentos, vou precisar te transferir para um atendente humano. Um momento!","agente-principal","2025-03-10T10:15:46.000Z",
+"5511999990002","text/plain","SENT","Olá! Aqui é a Ana, do time de suporte. Vi que você precisa cancelar um pedido. Qual o número?","agente-principal","2025-03-10T10:18:03.000Z","{""humanAssigneeId"": ""ana.souza@lojaxyz.com""}"
+"5511999990002","text/plain","RECEIVED","É o pedido #91020","agente-principal","2025-03-10T10:18:45.000Z",
+"5511999990002","text/plain","SENT","Perfeito! O cancelamento do pedido #91020 foi realizado com sucesso. O estorno será feito em até 5 dias úteis.","agente-principal","2025-03-10T10:20:11.000Z","{""humanAssigneeId"": ""ana.souza@lojaxyz.com""}"
+"5511999990002","text/plain","RECEIVED","Muito obrigado!","agente-principal","2025-03-10T10:20:30.000Z",
+"5511999990003","text/plain","SENT","Olá! Bem-vindo ao atendimento da Loja XYZ. Como posso te ajudar hoje?","agente-principal","2025-03-10T11:30:00.000Z",
+"5511999990003","text/plain","RECEIVED","produto com defeito","agente-principal","2025-03-10T11:30:20.000Z",
+"5511999990003","text/plain","SENT","Que pena! Vou te direcionar para o nosso setor de trocas e devoluções.","agente-troca","2025-03-10T11:30:22.000Z","{""subAgentId"": ""agente-troca""}"
+"5511999990003","text/plain","SENT","Olá! Sou o agente de trocas. Pode me descrever o defeito?","agente-troca","2025-03-10T11:30:24.000Z","{""subAgentId"": ""agente-troca""}"
+"5511999990003","text/plain","RECEIVED","A tela está quebrada, veio assim na caixa","agente-troca","2025-03-10T11:31:05.000Z",
+"5511999990003","text/plain","SENT","Entendido. Vamos iniciar o processo de troca. Você receberá um e-mail com as instruções em até 24h.","agente-troca","2025-03-10T11:31:10.000Z","{""subAgentId"": ""agente-troca""}"

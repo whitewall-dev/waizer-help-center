@@ -1,0 +1,77 @@
+---
+id: connecting-blip
+title: Conectando com o Blip
+sidebar_label: Integração Blip
+sidebar_position: 1
+description: Aprenda a conectar o Waizer ao seu chatbot no Blip usando autenticação por token.
+---
+
+# Conectando com o Blip
+
+A integração com o Blip é a forma mais rápida de começar a analisar conversas com o Waizer. Com ela, o Waizer acessa automaticamente o histórico de conversas do seu chatbot e mantém os dados atualizados de forma contínua.
+
+---
+
+## Pré-requisitos
+
+Antes de começar, você precisará:
+
+- Acesso ao [portal do Blip](https://portal.blip.ai) com permissão de **administrador** no chatbot que deseja conectar.
+- Um projeto criado no Waizer (veja [Primeiros Passos](/getting-started)).
+
+---
+
+## Passo a passo
+
+### 1. Inicie o onboarding
+
+No seu projeto Waizer, clique em **Configurar integração** ou acesse a aba **Configurações** do projeto.
+
+Em seguida, selecione **Blip** como fonte de dados.
+
+### 2. Autentique com o Blip
+
+Você será redirecionado para a tela de autorização do Blip. Faça login com suas credenciais e autorize o Waizer a acessar o chatbot desejado.
+
+Após a autorização, você retornará automaticamente ao Waizer com a integração configurada.
+
+:::note[Permissões necessárias]
+O Waizer solicita apenas permissões de **leitura** no Blip. Nenhuma conversa ou configuração do chatbot será modificada.
+:::
+
+### 3. Acompanhe a ingestão
+
+Após a autenticação, o Waizer começará a importar as conversas do Blip. Você pode acompanhar o andamento na aba **Configurações → Progresso da importação**.
+
+O tempo de processamento varia conforme o volume de conversas do chatbot.
+
+---
+
+## Período de avaliação
+
+Ao conectar um chatbot Blip pela primeira vez, a integração entra em **período de avaliação de 10 dias**.
+
+| Durante a avaliação | Após a avaliação |
+|---|---|
+| Análise dos últimos 7 dias de conversas | Análise do histórico completo disponível |
+| Dashboard com métricas do período recente | Dashboard com histórico completo |
+| Período gratuito para validar o valor do produto | Integração permanente ativa |
+
+---
+
+## Atualização dos dados
+
+Após a configuração inicial, o Waizer sincroniza automaticamente novas conversas do Blip em intervalos regulares. Não é necessário nenhuma ação adicional — seu dashboard estará sempre atualizado.
+
+---
+
+## Solução de problemas
+
+**Não vejo o chatbot que quero conectar**
+Verifique se sua conta no Blip tem permissão de administrador para esse chatbot. Apenas chatbots onde você tem acesso de administrador aparecerão para seleção.
+
+**A importação está demorando muito**
+Chatbots com grande volume de conversas podem levar mais tempo. Verifique o progresso em **Configurações → Progresso da importação**. Se travar por mais de 24 horas, entre em contato com o suporte.
+
+**Preciso reconectar o chatbot**
+Acesse **Configurações** do projeto e clique em **Reautenticar com o Blip**. Isso renovará o token de acesso sem apagar os dados já processados.

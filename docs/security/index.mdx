@@ -1,0 +1,116 @@
+---
+id: security
+title: Segurança e Autenticação
+sidebar_label: Segurança e Autenticação
+sidebar_position: 7
+description: Configure autenticação SSO, SAML e políticas de segurança para sua organização no Waizer.
+---
+
+# Segurança e Autenticação
+
+O Waizer oferece controles de segurança para garantir que apenas pessoas autorizadas acessem os dados da sua organização. Esta seção cobre autenticação, SSO (Single Sign-On) e configurações de segurança disponíveis para administradores.
+
+---
+
+## Métodos de autenticação disponíveis
+
+Cada usuário pode fazer login no Waizer usando:
+
+| Método | Descrição |
+|---|---|
+| **E-mail e senha** | Autenticação tradicional com verificação de e-mail obrigatória |
+| **Google** | Login via conta Google (OAuth) |
+| **Microsoft** | Login via conta Microsoft/Azure AD (OAuth) |
+| **SAML** | SSO empresarial via provedor de identidade corporativo |
+
+---
+
+## Verificação de e-mail
+
+Todo cadastro por e-mail e senha requer verificação do e-mail antes do primeiro acesso. O link de verificação é enviado automaticamente e expira em 24 horas.
+
+Se o link expirar, o usuário pode solicitar um novo na tela de login.
+
+---
+
+## SSO com Google ou Microsoft
+
+Para organizações que usam Google Workspace ou Microsoft 365, o login via OAuth é a forma mais simples de SSO. Os usuários acessam o Waizer com as mesmas credenciais corporativas, sem criar uma senha separada.
+
+**Para ativar o SSO forçado via Google ou Microsoft:**
+
+1. Acesse **Configurações da organização → Segurança**.
+2. Ative a opção **Forçar SSO**.
+3. Selecione o provedor (Google ou Microsoft).
+
+Com o SSO forçado ativado, apenas usuários autenticados via esse provedor poderão acessar a organização. Login por e-mail/senha será bloqueado.
+
+---
+
+## SAML (SSO empresarial)
+
+O SAML permite integrar o Waizer com provedores de identidade corporativos como Okta, Azure AD, OneLogin ou qualquer IdP compatível com SAML 2.0.
+
+### Configuração do SAML
+
+Acesse **Configurações da organização → Segurança → SAML**.
+
+Você precisará de dois conjuntos de informações:
+
+**Informações que você fornece ao seu IdP:**
+| Campo | Valor |
+|---|---|
+| **Entity ID** | Gerado pelo Waizer (disponível na tela de configuração) |
+| **ACS URL** | URL de callback do Waizer (disponível na tela de configuração) |
+
+**Informações que você obtém do seu IdP:**
+| Campo | Descrição |
+|---|---|
+| **SSO URL** | URL de login do seu provedor de identidade |
+| **Certificado X.509** | Certificado público do IdP para validação de assinaturas |
+
+### Domínios autorizados
+
+Na configuração SAML, você pode especificar **domínios de e-mail autorizados** (ex: `empresa.com.br`). Apenas usuários com e-mails nesses domínios poderão fazer login via SAML.
+
+### Testando a configuração
+
+Após inserir as informações, clique em **Testar conexão** antes de ativar o SAML. Isso valida se o fluxo de autenticação está funcionando corretamente sem impactar usuários existentes.
+
+:::warning[Ative com cuidado]
+Ativar o SAML com configurações incorretas pode bloquear o acesso de todos à organização. Sempre teste a conexão primeiro e mantenha um admin com acesso alternativo durante a migração.
+:::
+
+---
+
+## Forçar SSO para todos os membros
+
+Com o SSO configurado (via OAuth ou SAML), você pode exigir que **todos os membros** da organização usem exclusivamente esse método de login.
+
+**Para ativar:**
+1. Acesse **Configurações → Segurança**.
+2. Ative **Forçar SSO**.
+
+A partir desse momento, qualquer tentativa de login por e-mail/senha ou por um provedor não autorizado será bloqueada.
+
+:::tip[Recomendação para empresas]
+Ativar o forçamento de SSO garante que o acesso ao Waizer seja gerenciado centralmente pelo seu IdP. Quando um funcionário sai da empresa e tem sua conta desativada no IdP, o acesso ao Waizer é revogado automaticamente.
+:::
+
+---
+
+## Redefinição de senha
+
+Usuários com login por e-mail/senha podem redefinir a senha pela tela de login, clicando em **Esqueci minha senha**. Um e-mail com link de redefinição será enviado para o endereço cadastrado.
+
+Admins não têm acesso às senhas dos membros e não podem redefini-las em nome de outros usuários.
+
+---
+
+## Boas práticas de segurança
+
+- Habilite o **SSO forçado** para garantir que desligamentos de funcionários revoguem automaticamente o acesso ao Waizer.
+- Mantenha pelo menos **dois admins** na organização para evitar situações de bloqueio.
+- **Revise os membros** periodicamente e remova quem não faz mais parte do time.
+- **Revogue chaves de API** que não estiverem em uso (veja [Chaves de API](/organizations/api-keys)).
+- Ao configurar SAML, use certificados atualizados e configure alertas de expiração no seu IdP.

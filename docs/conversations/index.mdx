@@ -1,0 +1,98 @@
+---
+id: conversations
+title: Explorando Conversas
+sidebar_label: Conversas
+sidebar_position: 4
+description: Saiba como navegar e analisar conversas individuais para entender o contexto por trás das métricas do dashboard.
+---
+
+# Explorando Conversas
+
+As métricas do dashboard mostram o quadro geral. O navegador de conversas permite que você mergulhe nas threads individuais para entender **o porquê** por trás dos números — quais erros aconteceram, como o usuário reagiu, onde o fluxo quebrou.
+
+---
+
+## Abrindo o navegador de conversas
+
+No dashboard, clique no ícone de conversas na barra lateral ou no link **Ver conversas** em qualquer card de métrica. Um painel lateral deslizará pela direita exibindo a lista de conversas do período selecionado.
+
+---
+
+## Lista de conversas
+
+A lista exibe as conversas do período filtrado no dashboard, com um resumo de cada thread:
+
+| Informação | Descrição |
+|---|---|
+| **ID da conversa** | Identificador externo da conversa na plataforma de origem |
+| **Data** | Quando a conversa ocorreu |
+| **Sentimento** | Indicador visual do sentimento predominante |
+| **Status** | Resolvida, com erro, ou com handoff |
+
+Você pode filtrar e ordenar a lista por status, sentimento ou data para encontrar os casos mais relevantes.
+
+---
+
+## Lendo uma conversa
+
+Clique em qualquer conversa da lista para abrir o thread completo. A visualização mostra as mensagens em ordem cronológica, no formato de chat familiar:
+
+- **Mensagens à direita** (com destaque diferente) — enviadas pelo bot
+- **Mensagens à esquerda** — enviadas pelo usuário
+
+### Anotações por mensagem
+
+O Waizer pode exibir indicadores em mensagens específicas:
+
+| Indicador | Significado |
+|---|---|
+| 🔴 Erro | A plataforma registrou um erro nessa mensagem |
+| 👤 Handoff | O atendimento foi transferido para um humano a partir daqui |
+| 😟 Sentimento negativo | A IA detectou frustração ou insatisfação nessa mensagem |
+
+---
+
+## Metadados da conversa
+
+Acima do thread, você verá um resumo com os metadados da conversa:
+
+- **Duração** — tempo total da conversa
+- **Total de mensagens** — volume de trocas
+- **Agente responsável** — qual fluxo ou sub-agente tratou a conversa
+- **Resultado** — resolução, erro ou handoff
+- **Tópico identificado** — o assunto principal da conversa, detectado por IA
+
+---
+
+## Abrindo na plataforma de origem
+
+Para conversas vindas do Blip, um botão **Abrir no Blip** aparece no cabeçalho da thread. Ele abre diretamente a conversa na plataforma original, útil para contextos adicionais ou para acompanhamento de suporte.
+
+---
+
+## Casos de uso comuns
+
+### Investigar um erro específico
+
+1. No dashboard, clique no card **Erros críticos**.
+2. Filtre por um tipo de erro específico.
+3. Abra as conversas afetadas e leia o contexto em que o erro aconteceu.
+4. Identifique o padrão: o erro acontece em um ponto específico do fluxo? Com certos tipos de mensagem?
+
+### Entender abandono ou baixa resolução
+
+1. Filtre conversas com status **não resolvida** e **sem handoff**.
+2. Leia as conversas próximas ao ponto de abandono.
+3. Identifique se o bot falhou em entender o usuário, se as opções oferecidas não eram relevantes, ou se o fluxo ficou preso em loop.
+
+### Validar insights do assistente de IA
+
+Quando o [Assistente de IA](/ai-agent) indicar um problema ou padrão, use o navegador de conversas para ver exemplos reais que embasam a conclusão.
+
+---
+
+## Conversas elegíveis para análise completa
+
+O Waizer realiza análise profunda por IA em conversas com **pelo menos 5 mensagens trocadas entre usuário e bot**. Conversas muito curtas (saudação + uma troca, por exemplo) são indexadas mas podem não gerar análise de sentimento ou classificação de tópico.
+
+Isso garante que os insights sejam baseados em interações com contexto suficiente para análise significativa.

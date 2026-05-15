@@ -1,0 +1,165 @@
+---
+id: dashboard
+title: Entendendo o Dashboard
+sidebar_label: Dashboard
+sidebar_position: 3
+description: Aprenda a ler e interpretar todas as métricas, gráficos e visualizações do dashboard do Waizer.
+---
+
+# Entendendo o Dashboard
+
+O dashboard é o centro do Waizer. Ele reúne, em uma única tela, todas as métricas que você precisa para avaliar o desempenho do seu chatbot e identificar oportunidades de melhoria.
+
+---
+
+## Visão geral do layout
+
+O dashboard é dividido em blocos:
+
+```
+┌─────────────────────────────────────────────────────────┐
+│  Filtro de período                                        │
+├──────────┬──────────┬──────────┬──────────┬─────────────┤
+│ Threads  │  Erros   │ Resolução│  Handoff │ Performance  │
+│  (total) │  (taxa)  │  (taxa)  │  (taxa)  │  (score)    │
+├──────────┴──────────┴──────────┴──────────┴─────────────┤
+│  Gráfico de sentimento ao longo do tempo                 │
+├─────────────────────────┬───────────────────────────────┤
+│  Erros críticos         │  Tópicos mais discutidos      │
+├─────────────────────────┴───────────────────────────────┤
+│  Nuvem de palavras                                       │
+└─────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Filtro de período
+
+No topo do dashboard há um seletor de período. Todas as métricas e gráficos são filtrados pelo intervalo selecionado.
+
+**Opções disponíveis:**
+- Últimas 24 horas
+- Últimos 7 dias
+- Últimos 30 dias
+- Últimos 90 dias
+- Período customizado
+
+:::tip[Comparação de períodos]
+Use períodos diferentes para comparar o antes e depois de mudanças no fluxo do bot. Por exemplo, compare os 30 dias anteriores a uma atualização com os 30 dias posteriores.
+:::
+
+---
+
+## Cards de métricas principais
+
+### Threads (Total de conversas)
+
+Exibe o número total de conversas analisadas no período selecionado. Uma **thread** corresponde a uma conversa completa entre o usuário e o chatbot.
+
+Este número é a base de cálculo para todas as taxas percentuais do dashboard.
+
+---
+
+### Taxa de erros
+
+Percentual de conversas que apresentaram pelo menos um erro durante a interação.
+
+**O que é um erro?**
+Um erro pode ser:
+- Uma falha técnica reportada pela plataforma (ex: timeout, integração indisponível).
+- Um momento onde o bot não conseguiu entender ou responder adequadamente (detectado por IA).
+
+**Como interpretar:**
+- **Abaixo de 5%** — Excelente. Raros problemas.
+- **5% a 15%** — Atenção recomendada. Revise os erros críticos.
+- **Acima de 15%** — Crítico. O bot está falhando frequentemente.
+
+---
+
+### Taxa de resolução
+
+Percentual de conversas onde o usuário teve seu problema resolvido sem intervenção humana.
+
+A resolução é determinada por análise de IA: o modelo avalia o contexto completo da conversa e identifica se o objetivo do usuário foi atingido.
+
+**Como interpretar:**
+- **Acima de 70%** — Bom. O bot está resolvendo bem.
+- **50% a 70%** — Espaço para melhoria. Analise os tópicos mais discutidos.
+- **Abaixo de 50%** — O bot não está resolvendo a maioria dos casos. Revisão profunda necessária.
+
+---
+
+### Taxa de handoff
+
+Percentual de conversas que foram transferidas para um atendente humano.
+
+**Importante:** Nem todo handoff é negativo. Em alguns fluxos, a transferência para humano é o objetivo esperado (ex: vendas consultivas). Interprete essa métrica no contexto do seu fluxo.
+
+**Sinais de alerta:**
+- Handoff muito alto em fluxos que deveriam ser 100% automatizados.
+- Handoff concentrado em determinados horários ou tópicos.
+
+---
+
+### Pontuação de desempenho
+
+Um score composto de 0 a 100 que combina as principais métricas do chatbot em um único indicador de saúde.
+
+**Escala:**
+| Score | Classificação |
+|---|---|
+| 80 – 100 | Excelente |
+| 60 – 79 | Bom |
+| 40 – 59 | Regular |
+| Abaixo de 40 | Crítico |
+
+O score leva em conta resolução, erros e handoff de forma ponderada. Use-o para ter uma visão rápida da saúde geral do bot.
+
+---
+
+## Gráfico de sentimento
+
+O gráfico de sentimento mostra a evolução do sentimento médio dos usuários ao longo do tempo no período selecionado.
+
+**Interpretação:**
+- **Linha subindo** — Usuários ficando mais satisfeitos ao longo do tempo.
+- **Linha descendo** — Tendência de frustração crescente. Verifique se houve mudanças no fluxo ou picos de erros no mesmo período.
+- **Picos negativos** — Momentos específicos com frustração elevada. Filtre as conversas nesse período para investigar.
+
+---
+
+## Erros críticos
+
+Lista os principais tipos de erro identificados pela IA, ordenados por impacto e frequência.
+
+Cada erro exibe:
+- **Nome/descrição** do erro
+- **Frequência** — quantas conversas foram afetadas
+- **Tendência** — se está aumentando ou diminuindo
+
+Use esta seção para **priorizar o que corrigir primeiro**. Erros com alta frequência e tendência crescente são os mais urgentes.
+
+---
+
+## Tópicos mais discutidos
+
+Mostra os assuntos que os usuários mais abordam nas conversas, com a frequência relativa de cada um.
+
+Use esta seção para:
+- Identificar demandas não atendidas pelo bot atual.
+- Priorizar novos fluxos a construir.
+- Detectar mudanças no comportamento dos usuários ao longo do tempo.
+
+---
+
+## Nuvem de palavras
+
+Visualização semântica das palavras mais relevantes nas conversas. O tamanho de cada palavra reflete sua frequência. A cor pode indicar o sentimento associado ao termo.
+
+A nuvem de palavras é útil para uma leitura rápida dos temas dominantes e para identificar termos que seus usuários usam, mas que talvez seu bot não reconheça.
+
+---
+
+## Próximo passo: explorar conversas individuais
+
+Além das métricas agregadas, você pode mergulhar em conversas específicas para entender o contexto por trás dos números. Veja como usar o [Navegador de Conversas](/conversations).

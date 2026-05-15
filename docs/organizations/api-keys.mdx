@@ -1,0 +1,63 @@
+---
+id: api-keys
+title: Chaves de API
+sidebar_label: Chaves de API
+sidebar_position: 2
+description: Aprenda a criar, gerenciar e revogar chaves de API para integração programática com o Waizer.
+---
+
+# Chaves de API
+
+As chaves de API permitem que sistemas externos enviem dados para o Waizer ou acessem a plataforma programaticamente, sem depender de login manual. São utilizadas principalmente para a [integração via API](/getting-started/connecting-api).
+
+---
+
+## Onde gerenciar chaves de API
+
+Acesse **Configurações da organização → Chaves de API**.
+
+Apenas **admins** da organização podem criar, editar ou revogar chaves de API.
+
+---
+
+## Criando uma chave de API
+
+1. Clique em **Nova chave de API**.
+2. Informe um **nome descritivo** que identifique o uso da chave (ex: "Bot Atendimento Produção", "Pipeline CI").
+3. Clique em **Criar**.
+4. **Copie a chave gerada imediatamente** — ela só será exibida uma vez. Após fechar o modal, não é possível visualizá-la novamente.
+
+:::danger[A chave só aparece uma vez]
+Guarde a chave em um local seguro (como um gerenciador de segredos ou variável de ambiente no seu sistema). Se perder a chave, você precisará criar uma nova e atualizar todos os sistemas que a utilizam.
+:::
+
+---
+
+## Boas práticas de segurança
+
+- **Uma chave por sistema** — crie uma chave separada para cada serviço ou ambiente (produção, staging, dev). Assim, se uma chave for comprometida, você pode revogá-la sem afetar os outros sistemas.
+- **Nunca exponha em código frontend** — chaves de API devem ser usadas apenas em ambientes server-side (backends, workers, scripts).
+- **Nunca commite em repositórios** — use variáveis de ambiente. Adicione arquivos `.env` ao `.gitignore`.
+- **Monitore o uso** — se perceber chamadas inesperadas, revogue a chave imediatamente.
+
+---
+
+## Renomeando uma chave
+
+Clique no nome da chave na lista para editá-lo. Renomear não altera o valor da chave nem invalida sua autenticação.
+
+---
+
+## Revogando uma chave
+
+Para revogar uma chave, clique no menu **⋮** ao lado dela e selecione **Revogar**.
+
+A revogação é **imediata e irreversível**. Qualquer sistema usando essa chave perderá acesso instantaneamente. Certifique-se de atualizar todos os sistemas dependentes antes ou imediatamente após a revogação.
+
+---
+
+## Auditoria de chaves
+
+Mantenha sua lista de chaves organizada. Se encontrar chaves sem nome claro ou cujo uso não consegue identificar, revogue-as. Chaves não utilizadas são um risco de segurança desnecessário.
+
+Recomendamos revisar a lista de chaves a cada 3 meses.

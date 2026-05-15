@@ -1,0 +1,81 @@
+---
+id: roles
+title: Papéis e Permissões
+sidebar_label: Papéis e Permissões
+sidebar_position: 1
+description: Entenda os papéis disponíveis no Waizer e o que cada um pode ou não fazer na organização.
+---
+
+# Papéis e Permissões
+
+O Waizer usa um sistema de papéis baseados em nível de acesso. Cada membro da organização tem um papel que define o que ele pode ver e fazer.
+
+---
+
+## Papéis disponíveis
+
+| Papel | Descrição |
+|---|---|
+| **Admin** | Acesso completo. Gerencia membros, projetos, segurança e configurações da organização. |
+| **Editor** (Member) | Pode visualizar e interagir com todos os dados e projetos. Acesso limitado a configurações críticas. |
+| **Viewer** | Acesso somente leitura ao dashboard e conversas. Não pode alterar configurações. |
+
+---
+
+## Tabela de permissões
+
+### Organização
+
+| Ação | Admin | Editor | Viewer |
+|---|:---:|:---:|:---:|
+| Ver projetos da organização | ✅ | ✅ | ✅ |
+| Criar projetos | ✅ | ✅ | ❌ |
+| Excluir projetos | ✅ | ❌ | ❌ |
+| Convidar membros | ✅ | ❌ | ❌ |
+| Alterar papéis de membros | ✅ | ❌ | ❌ |
+| Remover membros | ✅ | ❌ | ❌ |
+| Gerenciar chaves de API | ✅ | ❌ | ❌ |
+| Configurar segurança (SSO, SAML) | ✅ | ❌ | ❌ |
+| Excluir organização | ✅ | ❌ | ❌ |
+
+### Dashboard e Dados
+
+| Ação | Admin | Editor | Viewer |
+|---|:---:|:---:|:---:|
+| Ver dashboard e métricas | ✅ | ✅ | ✅ |
+| Filtrar por período | ✅ | ✅ | ✅ |
+| Navegar conversas individuais | ✅ | ✅ | ✅ |
+| Usar o assistente de IA | ✅ | ✅ | ✅ |
+| Compartilhar sessões do assistente | ✅ | ✅ | ❌ |
+
+### Configurações do Projeto
+
+| Ação | Admin | Editor | Viewer |
+|---|:---:|:---:|:---:|
+| Ver configurações do projeto | ✅ | ✅ | ❌ |
+| Editar nome do projeto | ✅ | ✅ | ❌ |
+| Gerenciar integração de dados | ✅ | ✅ | ❌ |
+| Excluir projeto | ✅ | ❌ | ❌ |
+
+---
+
+## Como alterar o papel de um membro
+
+Somente **admins** podem alterar papéis.
+
+1. Acesse **Configurações da organização → Membros**.
+2. Localize o membro na lista.
+3. Clique no papel atual exibido ao lado do nome.
+4. Selecione o novo papel no menu.
+
+A alteração tem efeito imediato — o membro verá as novas permissões no próximo carregamento de página.
+
+---
+
+## Transferindo a administração
+
+Se o admin principal da organização sair da empresa ou mudar de função, outro admin pode promover qualquer membro a admin. Recomendamos ter **pelo menos dois admins** na organização para evitar situações de bloqueio.
+
+:::warning[Cuidado ao rebaixar admins]
+Se você rebaixar o único admin da organização, perderá a capacidade de gerenciar membros e configurações. Certifique-se de que outro admin já está configurado antes de fazer isso.
+:::
