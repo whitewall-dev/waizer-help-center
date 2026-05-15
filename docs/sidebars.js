@@ -17,7 +17,15 @@ const sidebars = {
         'getting-started/processing',
       ],
     },
-    'dashboard/index',
+    {
+      type: 'category',
+      label: 'Dashboard',
+      collapsed: false,
+      items: [
+        'dashboard/index',
+        'dashboard/kpis',
+      ],
+    },
     'conversations/index',
     'ai-agent/index',
     {

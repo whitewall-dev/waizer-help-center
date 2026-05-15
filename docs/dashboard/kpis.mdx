@@ -1,0 +1,228 @@
+---
+id: kpis
+title: Como o Waizer Calcula os KPIs Conversacionais
+sidebar_label: Cálculo dos KPIs
+sidebar_position: 2
+description: Como o Waizer identifica transbordo, erro, resolução e sentimento — quais métricas dependem de dados estruturados, quais são inferidas por IA, e como agir quando um número parece incorreto.
+---
+
+# Como o Waizer Calcula os KPIs Conversacionais
+
+O Waizer produz dois tipos de métricas: **estáticas**, calculadas a partir de campos estruturados nas mensagens, e **inferidas por IA**, produzidas pelo modelo de linguagem que analisa o conteúdo de cada conversa. A distinção é importante porque o que você vê no dashboard e o que você pode fazer quando algo parece errado dependem diretamente de qual tipo gerou o número.
+
+| Tipo | Como é produzido | Pode ser corrigido via dados |
+|---|---|---|
+| **Estático** | Calculado a partir de campos obrigatórios ou de metadados estruturados | Sim — corrigindo os dados na fonte |
+| **Inferido por IA** | Gerado pelo modelo de linguagem a partir do conteúdo das mensagens | Parcialmente — dependendo do caso |
+
+---
+
+## Quais conversas entram nos cálculos de IA
+
+Antes de detalhar cada KPI, um ponto crítico: **a IA não analisa todas as conversas importadas**.
+
+Para ser incluída na análise por IA, uma conversa precisa ter:
+- Ao menos **5 mensagens enviadas pelo bot** (direção `SENT`)
+- Ao menos **5 mensagens enviadas pelo usuário** (direção `RECEIVED`)
+
+Conversas abaixo desse mínimo são armazenadas e contabilizadas no total de threads, mas **não geram análise de IA** — e portanto não contribuem para as taxas de resolução, erro por IA, sentimento ou score de desempenho.
+
+:::note[Total de conversas ≠ conversas analisadas pela IA]
+O número exibido no card **Threads** inclui todas as conversas importadas no período. As taxas percentuais (resolução, handoff, erro) são calculadas sobre o subconjunto analisado pela IA — que pode ser menor que o total. Isso é esperado: conversas muito curtas não têm contexto suficiente para análise.
+:::
+
+---
+
+## Transbordo (Handoff)
+
+**Tipo:** Estático — depende exclusivamente de metadados estruturados.
+
+O Waizer identifica uma transferência para atendente humano pela presença do campo `humanAssigneeId` nos metadados de uma mensagem. Não há inferência de IA envolvida: se o campo está presente, o transbordo é contabilizado; se não está, não é.
+
+### Como o Waizer lê o transbordo por fonte de dados
+
+**Blip:** extraído automaticamente do campo interno `#message.agentIdentity` do Blip. Toda mensagem enviada por um atendente humano no Blip já carrega essa informação. Nenhuma configuração adicional é necessária.
+
+**CSV:** informado manualmente no campo `metadata` de cada mensagem. Use `humanAssigneeId` com qualquer identificador do atendente (e-mail, nome, ID interno).
+
+**API:** mesmo campo `humanAssigneeId` no objeto de cada mensagem.
+
+### Como informar transbordo no CSV
+
+Adicione o campo `humanAssigneeId` no `metadata` das mensagens enviadas pelo atendente humano:
+
+```csv
+"threadId","type","direction","content","agentId","timestamp","metadata"
+"5511999990001","text/plain","SENT","Olá, vou te transferir para um especialista.","bot-principal","2025-03-10T10:15:00Z",
+"5511999990001","text/plain","SENT","Aqui é a Ana, do time de suporte. Como posso ajudar?","bot-principal","2025-03-10T10:17:00Z","{""humanAssigneeId"": ""ana.souza@empresa.com""}"
+```
+
+O Waizer registra o **primeiro** `humanAssigneeId` encontrado na conversa. Mensagens subsequentes do mesmo atendente reforçam o sinal, mas não alteram o registro.
+
+:::tip[Sobre a taxa de handoff]
+Nem todo handoff é negativo. Em fluxos de vendas consultivas ou suporte de segundo nível, o handoff pode ser o resultado esperado. Interprete a taxa no contexto do objetivo do seu fluxo — não como uma métrica a minimizar sempre.
+:::
+
+---
+
+## Erro
+
+**Tipo:** Híbrido — combinação de dado estático e inferência por IA.
+
+O Waizer detecta erros por dois caminhos independentes, e o resultado exibido no dashboard unifica ambos sem dupla contagem.
+
+### Erro estático (dado estruturado)
+
+Originado do campo `metadata.error` de uma mensagem — geralmente uma falha técnica reportada pela plataforma (timeout, mensagem não entregue, integração indisponível).
+
+**Como informar no CSV:**
+
+```csv
+"5511999990002","text/plain","SENT","","bot-principal","2025-03-10T11:00:00Z","{""error"": ""MESSAGE_NOT_DELIVERED""}"
+```
+
+**Como a Blip reporta:** o campo é extraído automaticamente da descrição de falha (`item.reason.description`) das mensagens com status de erro no Blip.
+
+### Erro inferido por IA
+
+A IA analisa o conteúdo da conversa e identifica problemas de qualidade mesmo sem falha técnica explícita. São considerados erros por IA:
+
+- O bot repetiu a mesma pergunta ou instrução sem avançar
+- Validação rejeitou uma entrada válida do usuário
+- O usuário ficou preso em loop sem opção de saída
+- O bot interpretou incorretamente a intenção do usuário
+- A transferência para humano falhou ou o humano não resolveu o caso
+- As opções oferecidas não cobriam a necessidade do usuário
+- O bot forneceu informação incorreta ou desatualizada
+- O usuário precisou repetir informações já fornecidas
+- Resposta genérica onde o usuário precisava de ajuda específica
+- Menu ou fluxo não cobria o caso do usuário
+
+O erro inferido inclui uma **descrição específica em até 50 palavras** e o **timestamp da mensagem** onde ocorreu — visíveis na seção "Erros críticos" do dashboard.
+
+### Como os dois tipos de erro são unificados
+
+A taxa de erros no dashboard é calculada como:
+
+```
+(conversas com erro estático OU erro por IA) ÷ total de conversas analisadas
+```
+
+Uma conversa que tem os dois tipos de erro é contada apenas uma vez. Os erros são agrupados por tipo na seção "Erros críticos" para facilitar a priorização.
+
+---
+
+## Resolução (Sucesso)
+
+**Tipo:** Inferido por IA exclusivamente.
+
+A IA avalia se o objetivo do usuário foi atingido na conversa. Para conversas de suporte, verifica se o problema foi resolvido. Para conversas de vendas, se a compra foi concluída. Para outros fluxos, se o usuário obteve o que buscava.
+
+### Viés conservador
+
+**Quando há dúvida, a IA classifica a conversa como resolvida.**
+
+Casos ambíguos, spam, testes e abandonos sem sinal claro de frustração são marcados como sucesso por padrão. Isso significa que **a taxa de resolução tende a ser otimista** — conversas realmente problemáticas puxam o número para baixo, mas ruído é absorvido como sucesso.
+
+Use a taxa de resolução como um indicador de tendência ao longo do tempo, não como um número absoluto.
+
+---
+
+## Sentimento
+
+**Tipo:** Inferido por IA.
+
+A IA atribui duas notas de sentimento para cada conversa, em uma escala de 0 a 10:
+
+- **Sentimento inicial** — emoção do usuário no começo da conversa
+- **Sentimento final** — emoção do usuário ao término da conversa
+
+O gráfico de sentimento no dashboard mostra a média dessas notas ao longo do tempo. Um sentimento final consistentemente maior que o inicial indica que o chatbot está melhorando a experiência do usuário durante o atendimento.
+
+---
+
+## Score de desempenho
+
+**Tipo:** Inferido por IA.
+
+O score (0–10, exibido como 0–100 no dashboard) avalia a **qualidade do fluxo da conversa**, não o resultado. Uma conversa pode ter terminado sem resolução por razões externas ao bot e ainda assim ter um score alto — se o bot conduziu o fluxo corretamente.
+
+Isso o diferencia da taxa de resolução: resolução mede o resultado para o usuário; score mede a qualidade da execução do bot.
+
+---
+
+## Abandono e Retenção
+
+O Waizer não implementa abandono e retenção como KPIs formais calculados automaticamente.
+
+**Para estimar abandono:** filtre conversas onde `succeeded = false` e a última mensagem é do usuário (`RECEIVED`) — esse padrão sugere que o usuário desistiu sem receber resposta satisfatória.
+
+**Para retenção:** o Waizer não rastreia se o mesmo usuário retornou em períodos diferentes. Análises de retenção precisam ser feitas cruzando dados externos (ex: logs da plataforma) com os períodos de conversas no Waizer.
+
+---
+
+## O que fazer quando um KPI parece incorreto
+
+O diagnóstico depende de qual métrica está com problema.
+
+### Taxa de transbordo incorreta
+
+| Sintoma | Causa provável | Ação |
+|---|---|---|
+| Taxa zero em chatbot com humanos | `humanAssigneeId` ausente nos dados | Adicionar o campo nos dados e reimportar |
+| Taxa muito alta sem transferências reais | `humanAssigneeId` preenchido em mensagens automáticas por engano | Corrigir os dados na fonte e reimportar |
+| Taxa inconsistente com o Blip | Integração com Blip não está capturando o campo de agente | Verificar configuração do atendimento humano no Blip |
+
+### Taxa de erros incorreta
+
+| Sintoma | Causa provável | Ação |
+|---|---|---|
+| Erros estáticos altos sem falhas reais | Campo `metadata.error` preenchido em mensagens normais | Corrigir dados na fonte e reimportar |
+| Erros de IA parecem incorretos | A IA classificou como erro algo que não é | Ver seção de reprocessamento abaixo |
+| Erros estáticos não aparecem | Campo `metadata.error` não está sendo populado | Verificar pipeline de exportação ou integração |
+
+### Taxa de resolução incorreta
+
+| Sintoma | Causa provável | Ação |
+|---|---|---|
+| Taxa muito alta — parece otimista demais | Comportamento esperado (viés conservador da IA) | Analise a tendência no tempo, não o número absoluto |
+| Taxa muito baixa — conversas curtas penalizam | Conversas abaixo do mínimo de 5 mensagens por direção | Esperado — conversas curtas não têm contexto para análise |
+| Taxa não bate com impressão do time | Amostrar conversas individuais para verificar a classificação | Explorar conversas no Navegador de Conversas |
+
+### Score de desempenho inesperado
+
+O score reflete qualidade do fluxo, não resultado. Se parece baixo mesmo com boa taxa de resolução, a IA pode estar identificando problemas de condução da conversa (loops, respostas genéricas) que não impediram a resolução mas prejudicaram a experiência.
+
+---
+
+## Como reprocessar uma base após corrigir dados
+
+O que é possível reprocessar depende da modalidade de integração e do tipo de correção.
+
+### Corrigindo KPIs estáticos (transbordo, erro estático)
+
+Os KPIs estáticos são derivados dos metadados das mensagens. Para corrigi-los, é preciso atualizar os dados na fonte.
+
+**Blip:** corrija a configuração do atendimento no Blip e dispare uma nova importação cobrindo o período afetado. O Waizer buscará os dados atualizados diretamente do Blip.
+
+**API:** reenvie as mensagens corrigidas com o `externalId` da thread correspondente. A thread será atualizada com os novos metadados.
+
+**CSV:** o Waizer deduplica mensagens CSV pelo conjunto `threadId` + `timestamp` + `content`. Se apenas o campo `metadata` mudou, as mensagens serão tratadas como duplicatas e **não serão atualizadas** — a deduplicação não considera alterações de metadados. Para corrigir dados de um CSV já importado, entre em contato com o suporte para remoção dos registros originais antes de reimportar o arquivo corrigido.
+
+### Corrigindo KPIs inferidos por IA
+
+Não existe um botão de "reanalisar somente" para KPIs gerados por IA. O pipeline de análise é executado durante a importação — para reanalisar threads específicas, é preciso disparar uma nova importação cobrindo o período que contém essas threads.
+
+Na prática:
+
+1. Corrija os dados na fonte (metadados, conteúdo ou estrutura das mensagens).
+2. Dispare uma nova importação do período afetado (**Configurações → Importação manual** ou aguarde o próximo ciclo automático, para integrações Blip).
+3. O Waizer reprocessará as threads do período — inclusive as análises de IA — e atualizará os resultados no dashboard.
+
+:::warning[CSV: remoção prévia necessária]
+Para reimportar um CSV com correções de metadados, a remoção dos registros originais precisa ser feita pelo suporte antes do novo upload. Sem isso, as mensagens corrigidas serão descartadas como duplicatas.
+:::
+
+:::tip[Dica: valide antes de importar em produção]
+A forma mais eficiente de evitar reprocessamentos é validar uma amostra pequena antes de importar volumes grandes. Importe uma semana de dados, verifique se transbordo, erros e resolução estão sendo registrados corretamente e só então importe o período completo.
+:::
