@@ -24,6 +24,7 @@ const sidebars = {
       items: [
         'dashboard/index',
         'dashboard/kpis',
+        'dashboard/custom-kpis',
       ],
     },
     'conversations/index',

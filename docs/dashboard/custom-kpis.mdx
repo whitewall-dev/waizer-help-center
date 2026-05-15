@@ -1,0 +1,206 @@
+---
+id: custom-kpis
+title: Criando e Adaptando KPIs à Regra de Negócio
+sidebar_label: KPIs Personalizados
+sidebar_position: 3
+description: Como criar KPIs personalizados no Waizer, adaptar a análise ao contexto do seu negócio e boas práticas para definir métricas conversacionais que geram valor real.
+---
+
+# Criando e Adaptando KPIs à Regra de Negócio
+
+---
+
+## O que são os KPIs personalizados no Waizer
+
+Os KPIs personalizados no Waizer são **descrições de negócio** que você define para ajudar a IA a interpretar as conversas no contexto da sua operação. Eles não criam novas colunas no dashboard nem alteram os cálculos das métricas existentes — o que fazem é moldar como a IA enquadra a análise nos **relatórios gerados** e nas respostas do **assistente Ask Waizer**.
+
+Pense assim: sem KPIs personalizados, a IA avalia conversas com critérios genéricos. Com eles, a IA sabe que aquele chatbot é um bot de cobrança de segunda chance cuja meta é reverter inadimplência — e enquadra os insights nesse objetivo específico.
+
+---
+
+## O que é possível personalizar hoje
+
+| Configuração | O que faz | Onde configurar |
+|---|---|---|
+| **KPIs personalizados** (até 5) | Define métricas específicas do seu negócio para contextualizar relatórios e o assistente | Configurações → Perfil do Agente |
+| **Nome da empresa** | Identifica a organização na análise e nos relatórios | Configurações → Perfil do Agente |
+| **Segmento de negócio** | Informa o setor para contextualizar padrões de conversa | Configurações → Perfil do Agente |
+| **Resumo do negócio** | Descreve o chatbot, seus objetivos e capacidades | Configurações → Perfil do Agente |
+
+---
+
+## O que não é configurável sem o time Waizer
+
+Os critérios que determinam as métricas do dashboard — o que conta como erro, sucesso, transbordo e como o score de desempenho é calculado — são definidos nos prompts do sistema e **não podem ser alterados via interface**. Mudanças nesse nível requerem intervenção da equipe Waizer:
+
+- Rubrica de pontuação do score de desempenho (0–10)
+- O que a IA considera "erro" (lista de padrões avaliados)
+- O que a IA considera "resolução" (critérios de sucesso)
+- Criação de novas métricas no dashboard (ex: taxa de escalada, taxa de recompra)
+- Novas seções nos relatórios gerados
+- Regras de classificação de tópicos e insights
+
+Se o seu caso de uso exige algum desses itens, entre em contato com o time do Waizer para avaliar o que pode ser desenvolvido.
+
+---
+
+## Como criar e editar KPIs
+
+### Acessando o Perfil do Agente
+
+1. No seu projeto Waizer, acesse **Configurações → Perfil do Agente**.
+2. Preencha (ou revise) os campos de contexto da empresa: nome, segmento e resumo do negócio.
+3. Role até a seção **KPIs** para gerenciar seus indicadores personalizados.
+
+### Criando um KPI
+
+Cada KPI tem dois campos:
+
+| Campo | Limite | O que informar |
+|---|---|---|
+| **Nome** | Máximo 5 palavras | O nome do indicador como aparecerá nos relatórios |
+| **Descrição** | Uma frase | O critério ou objetivo que define esse KPI |
+
+Clique em **Adicionar KPI**, preencha os campos e salve. Você pode criar até **5 KPIs** por projeto.
+
+### Editando e excluindo KPIs
+
+Clique no KPI que deseja modificar para editar nome e descrição. Para excluir, use o ícone de remoção ao lado do KPI. As alterações têm efeito nos próximos relatórios gerados e nas respostas do assistente — os dados históricos não são reprocessados automaticamente.
+
+---
+
+## Como descrever a regra de negócio de um KPI
+
+A qualidade da análise gerada pela IA é proporcional à qualidade das descrições fornecidas. Uma descrição vaga produz insights vagos.
+
+### A estrutura de uma boa descrição
+
+Uma descrição eficaz responde: **"O que deve acontecer na conversa para que este KPI seja considerado positivo?"**
+
+| Componente | Pergunta que responde | Exemplo |
+|---|---|---|
+| **O objetivo do usuário** | O que o usuário veio buscar? | "O usuário tentou realizar uma segunda negociação de dívida" |
+| **O critério de sucesso** | O que indica que deu certo? | "O bot apresentou proposta e o usuário aceitou ou agendou retorno" |
+| **O critério de falha** | O que indica que não deu certo? | "O usuário abandonou sem resposta ou pediu para falar com humano antes da proposta" |
+
+Você não precisa incluir os três componentes em toda descrição — quanto mais contexto, melhor, mas a IA consegue trabalhar com qualquer combinação.
+
+### Boas práticas ao preencher o resumo do negócio
+
+O campo **Resumo do negócio** é tão importante quanto os próprios KPIs. Inclua:
+
+- O que o chatbot faz (ex: "bot de atendimento pós-venda para e-commerce de moda")
+- Os principais fluxos disponíveis (ex: "rastreamento de pedidos, trocas e devoluções, segunda via de boleto")
+- O que o bot **não** faz (ex: "não realiza cancelamentos — encaminha para humano")
+- O canal (ex: "WhatsApp, via Blip")
+
+Quanto mais preciso o resumo, mais a IA consegue distinguir conversas que seguiram o fluxo esperado das que apresentaram desvios.
+
+---
+
+## Evitando KPIs genéricos demais
+
+O erro mais comum é descrever o que a IA já avalia por padrão. Se o seu KPI é idêntico ao critério de resolução padrão do Waizer, ele não adiciona valor.
+
+### Exemplos de KPIs genéricos vs específicos
+
+| ❌ Genérico | ✅ Específico |
+|---|---|
+| "O usuário teve o problema resolvido" | "O usuário conseguiu emitir a segunda via do boleto sem intervenção humana" |
+| "O bot performou bem" | "O bot identificou corretamente o produto com defeito e abriu o protocolo de troca" |
+| "O atendimento foi satisfatório" | "O usuário confirmou o agendamento de visita técnica dentro da mesma conversa" |
+| "Detecção de erros no fluxo" | "O bot entrou em loop ao tentar validar o CPF mais de duas vezes" |
+| "Taxa de conversão" | "O usuário chegou ao passo de pagamento após passar pelo fluxo de apresentação de planos" |
+
+### Perguntas para sair do genérico
+
+Use estas perguntas para encontrar KPIs específicos para o seu negócio:
+
+1. **Qual é a ação concreta que define sucesso neste fluxo?** (não "resolver o problema", mas "confirmar o agendamento", "emitir o boleto", "finalizar o cadastro")
+2. **Quais são os pontos de abandono mais frequentes neste chatbot?** Cada um pode ser um KPI de detecção.
+3. **O que um analista de CX verificaria manualmente nessas conversas?** Isso é um KPI.
+4. **O que diferencia este bot de um bot genérico de atendimento?** O que é específico do seu produto é o que deve virar KPI.
+
+---
+
+## Adaptando KPIs por tipo de negócio
+
+### Chatbots de suporte ao cliente
+
+Foque em: resolução sem escalada, reincidência (mesmo usuário abre chamado repetido), tempo até apresentar a solução.
+
+Exemplos:
+- "Usuário resolveu o problema sem precisar de atendimento humano ou reabrir chamado"
+- "Bot identificou o defeito relatado e ofereceu troca ou reembolso dentro da política vigente"
+- "Usuário encontrou a informação de rastreamento sem repetir a pergunta"
+
+### Chatbots de vendas e conversão
+
+Foque em: avanço no funil, apresentação de proposta, objeções não tratadas.
+
+Exemplos:
+- "Usuário demonstrou intenção de compra e o bot apresentou oferta personalizada"
+- "Usuário chegou à etapa de pagamento após o fluxo de qualificação"
+- "Bot identificou objeção de preço e apresentou argumento de valor antes de encaminhar para humano"
+
+### Chatbots de cobrança e negociação
+
+Foque em: proposta apresentada, acordo fechado, recusa com registro de motivo.
+
+Exemplos:
+- "Bot apresentou proposta de parcelamento e usuário aceitou ou solicitou mais informações"
+- "Usuário sinalizou incapacidade de pagamento e bot registrou o contato para reativação futura"
+- "Conversa terminou com promessa de pagamento ou agendamento de retorno"
+
+### Chatbots de onboarding e cadastro
+
+Foque em: conclusão do fluxo, pontos de desistência, dados coletados com sucesso.
+
+Exemplos:
+- "Usuário completou o cadastro sem abandonar o fluxo no meio"
+- "Bot coletou os dados obrigatórios sem precisar solicitar o mesmo campo duas vezes"
+- "Usuário chegou à etapa de confirmação de e-mail após o fluxo completo"
+
+---
+
+## Como testar se um KPI está sendo interpretado corretamente
+
+Como os KPIs personalizados influenciam relatórios e o assistente — e não os cards do dashboard — a validação deve ser feita nesses dois lugares.
+
+### Validando nos relatórios
+
+1. Gere um relatório em **Configurações → Relatórios** para um período recente.
+2. Verifique se o relatório menciona os seus KPIs nas seções de métricas e plano de ação.
+3. Avalie se a IA interpretou corretamente o critério: o que ela identificou como problema ou oportunidade bate com o que você esperaria ver?
+
+Se o relatório parecer genérico demais, o mais provável é que as descrições dos KPIs ou o resumo do negócio precisem de mais especificidade.
+
+### Validando com o assistente
+
+1. Abra o assistente **Ask Waizer** no seu projeto.
+2. Faça perguntas diretamente relacionadas aos seus KPIs:
+   - "Quantas conversas atingiram o objetivo de [nome do KPI] no último mês?"
+   - "Quais são os principais motivos pelos quais [KPI] não está sendo atingido?"
+   - "Mostre exemplos de conversas que falharam no critério de [KPI]."
+3. Avalie se as respostas refletem o critério que você definiu ou se a IA está interpretando de forma diferente.
+
+Se o assistente não conseguir relacionar as conversas ao seu KPI, revise a descrição para ser mais explícita sobre o que constitui sucesso ou falha.
+
+---
+
+## Como documentar a regra de negócio para onboarding e continuidade
+
+O campo de descrição de cada KPI tem espaço limitado — use-o para o critério essencial. Para documentação mais completa da regra de negócio, mantenha um registro interno (pode ser um documento compartilhado com a equipe) que inclua:
+
+- **Nome do KPI** e **versão** (as descrições evoluem)
+- **Critério de sucesso** detalhado
+- **Critério de falha** detalhado
+- **Exemplos reais** de conversas que ilustram sucesso e falha
+- **Exceções conhecidas** (ex: "transferências para humano por VIP não contam como falha")
+- **Data da última revisão**
+
+Isso é especialmente importante quando múltiplas pessoas da equipe acessam o Waizer ou quando há rotatividade — a IA analisa com base no que está configurado, e se a configuração não reflete o acordo atual do time, os relatórios perdem utilidade.
+
+:::tip[Revisite os KPIs a cada mudança de fluxo]
+Sempre que o fluxo do chatbot mudar de forma significativa, revise as descrições dos KPIs. Um KPI calibrado para um fluxo antigo pode gerar análises incorretas quando o bot é atualizado.
+:::
